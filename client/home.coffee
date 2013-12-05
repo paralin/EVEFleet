@@ -1,27 +1,78 @@
+TrustStatus = new Meteor.Collection "truststat"
+Characters = new Meteor.Collection "characters"
+Session.set("hasTrust", false)
+Session.set("hostHash", 0)
+hostHash = 0
 eveHandle = @CCPEVE
 Template.page.hasTrust = ->
-  hasTrust()
+  Session.get("hasTrust")
 Template.generalInfo.shipType = ->
-  headers.get "eve_shiptypename"
+  char = Characters.findOne()
+  if !char?
+    "Loading..."
+  else
+    char.shiptype
 Template.generalInfo.shipName = ->
-  headers.get "eve_shipname"
+  char = Characters.findOne()
+  if !char?
+    "Loading..."
+  else
+    char.shipname
 Template.generalInfo.charName = ->
-  headers.get "eve_charname"
+  char = Characters.findOne()
+  if !char?
+    "Loading..."
+  else
+    char.name
 Template.generalInfo.corpName = ->
-  headers.get "eve_corpname"
+  char = Characters.findOne()
+  if !char?
+    "Loading..."
+  else
+    char.corpname
 Template.generalInfo.systemName = ->
-  headers.get "eve_solarsystemname"
+  char = Characters.findOne()
+  if !char?
+    "Loading..."
+  else
+    char.system
 Template.generalInfo.stationName = ->
-  headers.get "eve_stationname"
-Template.generalInfo.allHeaders = ->
-  EJSON.stringify headers.get()
+  char = Characters.findOne()
+  if !char?
+    "Loading..."
+  else
+    char.stationname
 Template.requestTrust.events
   'click .requestTrustButton': ()->
     requestTrust()
 
-hasTrust = ->
-  (headers.get "eve_trusted") is "Yes"
+Meteor.startup ->
+  Meteor.subscribe "trust"
+
 
 requestTrust = ()->
   pathArray = window.location.href.split '/'
   eveHandle.requestTrust(pathArray[0]+"//"+pathArray[2]+"/*")
+
+updateRequest = ()->
+  HTTP.get "http://10.0.1.2:3000/background/update", (err, res)->
+    if err?
+      console.log "Error trying to update the server with our status, "+err
+      return
+    hostHash = parseInt res.content
+    if Session.get("hostHash") isnt hostHash
+      Session.set("hostHash", hostHash)
+setInterval(updateRequest, 3000)
+updateRequest()
+
+
+#Update logic for trust status
+Deps.autorun ->
+  hostHash = Session.get("hostHash")
+  console.log "hostHash: "+hostHash
+  if hostHash is 0
+    return
+  trustStatus = TrustStatus.findOne({ident: Session.get("hostHash")}).status
+  if Session.get("hasTrust") isnt trustStatus
+    Session.set("hasTrust", trustStatus)
+  Meteor.subscribe "characters", Session.get("hostHash")

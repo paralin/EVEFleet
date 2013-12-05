@@ -2,21 +2,9 @@
   "meteor": {},
   "dependencies": {
     "basePackages": {
-      "headers": {},
-      "Spy": {},
       "iron-router": {}
     },
     "packages": {
-      "headers": {
-        "git": "https://github.com/gadicohen/meteor-headers.git",
-        "tag": "v0.0.11",
-        "commit": "f94347781ec6fc45c4008f4937738e598d864ea2"
-      },
-      "Spy": {
-        "git": "https://github.com/dasmithii/Spy-pkg.git",
-        "tag": "v0.3.2",
-        "commit": "5421c259d6a151840181db673e0c1f087a6e2349"
-      },
       "iron-router": {
         "git": "https://github.com/EventedMind/iron-router.git",
         "tag": "v0.6.1",

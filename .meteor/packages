@@ -5,6 +5,6 @@
 
 standard-app-packages
 preserve-inputs
-headers
 coffeescript
 iron-router
+http

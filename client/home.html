@@ -3,6 +3,7 @@
 </head>
 <body>
    {{>page}}
+   {{>updateFrame}}
 </body>
 <template name="page">
   {{#if hasTrust}}
@@ -12,18 +13,21 @@
   {{/if}}
 </template>
 <template name="generalInfo">
+   The server is keeping track of the following information in realtime:<br>
    Your ship name: {{shipName}}<br>
    Your ship type: {{shipType}}<br>
    Your character name: {{charName}}<br>
    Your corp name: {{corpName}}<br>
    Your system name: {{systemName}}<br>
    Your station name: {{stationName}}<br>
-   <br><br>
-   <!--All headers: <br>
-   {{allHeaders}}-->
 </template>
 <template name="requestTrust">
-  <h1>This site needs trust to work. Please accept the trust request.</h1>
+  <h1>This site needs trust to work.</h1>
   <br>
-  <button class="requestTrustButton">Accept Trust</button>
+    Trust allows the system to view basic information about your character: where you are, what ship you are in. The FC can view this information in realtime while the page is open in your ingame browser. The system can't see anything about you without trust, so you need to accept to continue.<br><br>
+    Just click the button and hit "trust website":<br>
+  <button class="requestTrustButton">Start System</button>
+</template>
+<template name="updateFrame">
+
 </template>
