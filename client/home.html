@@ -1,0 +1,20 @@
+<head>
+  <title>Test</title>
+</head>
+<body>
+  <h1>This site requires trust.</h1><br>
+    <br>
+   {{>generalInfo}}
+</body>
+
+<template name="generalInfo">
+   Your ship name: {{shipName}}<br>
+   Your ship type: {{shipType}}<br>
+   Your character name: {{charName}}<br>
+   Your corp name: {{corpName}}<br>
+   Your system name: {{systemName}}<br>
+   Your station name: {{stationName}}<br>
+   <br><br>
+   All headers: <br>
+     {{allHeaders}}
+</template>
