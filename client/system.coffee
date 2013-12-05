@@ -1,0 +1,2 @@
+@eveHandle = @CCPEVE
+@eveClient = eveHandle?
