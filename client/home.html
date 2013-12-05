@@ -2,11 +2,15 @@
   <title>Test</title>
 </head>
 <body>
-  <h1>This site requires trust.</h1><br>
-    <br>
-   {{>generalInfo}}
+   {{>page}}
 </body>
-
+<template name="page">
+  {{#if hasTrust}}
+   {{>generalInfo}}
+  {{else}}
+   {{>requestTrust}}
+  {{/if}}
+</template>
 <template name="generalInfo">
    Your ship name: {{shipName}}<br>
    Your ship type: {{shipType}}<br>
@@ -15,6 +19,11 @@
    Your system name: {{systemName}}<br>
    Your station name: {{stationName}}<br>
    <br><br>
-   All headers: <br>
-     {{allHeaders}}
+   <!--All headers: <br>
+   {{allHeaders}}-->
+</template>
+<template name="requestTrust">
+  <h1>This site needs trust to work. Please accept the trust request.</h1>
+  <br>
+  <button class="requestTrustButton">Accept Trust</button>
 </template>

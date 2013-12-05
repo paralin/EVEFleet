@@ -1,3 +1,6 @@
+eveHandle = @CCPEVE
+Template.page.hasTrust = ->
+  hasTrust()
 Template.generalInfo.shipType = ->
   headers.get "eve_shiptypename"
 Template.generalInfo.shipName = ->
@@ -12,3 +15,13 @@ Template.generalInfo.stationName = ->
   headers.get "eve_stationname"
 Template.generalInfo.allHeaders = ->
   EJSON.stringify headers.get()
+Template.requestTrust.events
+  'click .requestTrustButton': ()->
+    requestTrust()
+
+hasTrust = ->
+  (headers.get "eve_trusted") is "Yes"
+
+requestTrust = ()->
+  pathArray = window.location.href.split '/'
+  eveHandle.requestTrust(pathArray[0]+"//"+pathArray[2]+"/*")
