@@ -49,13 +49,14 @@ Meteor.startup ->
   Meteor.subscribe "trust"
   Meteor.subscribe "characters", Session.get("hostHash")
 
+pathArray = window.location.href.split '/'
+webAddress = pathArray[0]+"//"+pathArray[2]+"/"
 
 requestTrust = ()->
-  pathArray = window.location.href.split '/'
-  eveHandle.requestTrust(pathArray[0]+"//"+pathArray[2]+"/*")
+  eveHandle.requestTrust webAddress+"*"
 
 updateRequest = ()->
-  HTTP.get "http://142.129.179.196:3000/background/update", {headers: {ident: Session.get("hostHash")}}, (err, res)->
+  HTTP.get webAddress+"background/update", {headers: {ident: Session.get("hostHash")}}, (err, res)->
     if err?
       console.log "Error trying to update the server with our status, "+err
       return
