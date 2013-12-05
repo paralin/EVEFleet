@@ -15,13 +15,13 @@ Router.map ->
     where: 'server',
     path: '/background/update',
     action: ->
-      if @request.headers["eve_trusted"] is undefined
+      if !@request.headers["eve_trusted"]? or !@request.headers["ident"]?
         @response.writeHead 401, {'Content-Type': 'text/html'}
         @response.end "This is not supported in normal browsers."
         return
-      host = @request.headers["host"]
+      host = @request.connection.remoteAddress
       trusted = @request.headers["eve_trusted"] is "Yes"
-      hostHash = host.hashCode()
+      hostHash = @request.headers["ident"]
       trustStatus = PendingTrust.findOne({ident: hostHash})
       if !trustStatus?
         trustStatus = {ident: hostHash, status: trusted}
@@ -29,7 +29,7 @@ Router.map ->
       if trustStatus.status isnt trusted
         console.log "user "+(if trusted then @request.headers["eve_charname"] else hostHash)+" is now "+(if trusted then "trusted" else "not trusted")
         trustStatus.status = trusted
-        PendingTrust.update({ident: hostHash}, {$set: {status: trusted}})
+        PendingTrust.update({_id: trustStatus._id}, {$set: {status: trusted}})
       @response.writeHead 200, {'Content-Type': 'text/html'}
       @response.end ""+hostHash
 

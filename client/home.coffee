@@ -1,8 +1,7 @@
 TrustStatus = new Meteor.Collection "truststat"
 Characters = new Meteor.Collection "characters"
 Session.set("hasTrust", false)
-Session.set("hostHash", 0)
-hostHash = 0
+Session.set("hostHash", Random.id())
 eveHandle = @CCPEVE
 Template.page.hasTrust = ->
   Session.get("hasTrust")
@@ -48,6 +47,7 @@ Template.requestTrust.events
 
 Meteor.startup ->
   Meteor.subscribe "trust"
+  Meteor.subscribe "characters", Session.get("hostHash")
 
 
 requestTrust = ()->
@@ -55,24 +55,13 @@ requestTrust = ()->
   eveHandle.requestTrust(pathArray[0]+"//"+pathArray[2]+"/*")
 
 updateRequest = ()->
-  HTTP.get "http://10.0.1.2:3000/background/update", (err, res)->
+  HTTP.get "http://142.129.179.196:3000/background/update", {headers: {ident: Session.get("hostHash")}}, (err, res)->
     if err?
       console.log "Error trying to update the server with our status, "+err
       return
-    hostHash = parseInt res.content
-    if Session.get("hostHash") isnt hostHash
-      Session.set("hostHash", hostHash)
+    trustStatus = TrustStatus.findOne({ident: Session.get("hostHash")})
+    if Session.get("hasTrust") isnt trustStatus.status
+      Session.set("hasTrust", trustStatus.status)  #  Session.set("hostHash", hostHash)
 setInterval(updateRequest, 3000)
 updateRequest()
 
-
-#Update logic for trust status
-Deps.autorun ->
-  hostHash = Session.get("hostHash")
-  console.log "hostHash: "+hostHash
-  if hostHash is 0
-    return
-  trustStatus = TrustStatus.findOne({ident: Session.get("hostHash")}).status
-  if Session.get("hasTrust") isnt trustStatus
-    Session.set("hasTrust", trustStatus)
-  Meteor.subscribe "characters", Session.get("hostHash")
