@@ -1,5 +1,5 @@
-Meteor.startup ->
-  Template.pageDesign.isBrowser = ->
-    not Session.get "eveClient"
-  Template.pageDesign.renderLayout = ->
-    not (Session.get "eveClient") and Router.current().template isnt "browserSplash"
+Template.pageDesign.isBrowser = ->
+  not Session.get "eveClient"
+Template.pageDesign.renderLayout = ->
+  loggedIn = Meteor.user()?
+  not (Session.get "eveClient") and loggedIn

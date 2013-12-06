@@ -1,5 +1,5 @@
 Meteor.startup =>
-  if eveClient
+  if Session.get "eveClient"
     return
   Router.map ->
     @route 'home',
