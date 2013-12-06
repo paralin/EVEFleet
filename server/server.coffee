@@ -26,7 +26,32 @@ Meteor.publish "fleets", ->
 
 Meteor.methods
   createFleet: (fleetName, motd) ->
+    check fleetName, String
+    check motd, String
+    user = Meteor.user()
+    if !user?
+      throw new Meteor.Error 403, "You are not logged in"
+    fleet = Fleets.findOne({fcuser: user._id, active: true})
+    if fleet?
+      throw new Meteor.Error 404, "You've already created a fleet."
+    if 4 < fleetName.length < 30
+      throw new Meteor.Error 404, "Your fleet name needs to be 4-30 characters."
+    newFleet =
+      name: fleetName
+      motd: motd
+      fcuser: user._id
+      active: true
+    Fleets.insert(newFleet)
     console.log "Fleet name: "+fleetName+" MOTD: "+motd
+  leaveFleet: ->
+    user = Meteor.user()
+    if !user?
+      throw new Meteor.Error 403, "You are not logged in."
+    fleet = Fleets.findOne({fcuser: user._id, active: true})
+    if !fleet?
+      return
+    Fleets.update({_id: fleet._id}, {$set: {active: false}})
+    console.log "FC "+user.username+" has closed fleet "+fleet._id
 
 Router.map ->
   @route 'bgupdate',

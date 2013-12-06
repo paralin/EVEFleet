@@ -5,7 +5,8 @@
       "iron-router": {},
       "bootboxjs": {},
       "pnotify": {},
-      "jquery.transit": {}
+      "jquery.transit": {},
+      "jqbootstrapvalidation": {}
     },
     "packages": {
       "iron-router": {
@@ -27,6 +28,11 @@
         "git": "https://github.com/noorderstorm/meteor-jquery-transit.git",
         "tag": "v0.1.0",
         "commit": "d3b8a4149ab40b14b125edd473c3850177895fb5"
+      },
+      "jqbootstrapvalidation": {
+        "git": "https://github.com/nate-strauser/meteor-jqbootstrapvalidation.git",
+        "tag": "v0.1.0",
+        "commit": "2af4625d41a9b24311544a53790f14fa38c27b10"
       }
     }
   }

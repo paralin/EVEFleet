@@ -24,6 +24,23 @@ Template.browserHome.events
     $("#startOptions").fadeOut 450, ->
       $("#startOptions").hide()
       $("#createFleetForm").fadeIn(450)
+  'click #finalizeFleetBtn': (e)->
+    fleetName = $("#fleetName").val()
+    motd = $("#motd").val()
+    console.log "name: "+fleetName+" motd: "+motd
+    Meteor.call "createFleet", fleetName, motd, (err, res)->
+      if err?
+        $.pnotify
+          title: "Couldn't Create Fleet"
+          text: err.reason
+          type: 'error'
+          sticker: false
+      else
+        $.pnotify
+          title: "Fleet Created"
+          text: "Welcome to the FC interface!"
+          type: "success"
+          sticker: false
 Template.browserHome.menuFlipped = ->
   Session.get "startMenuFlipped"
 Template.browserHome.baseUrl = ->

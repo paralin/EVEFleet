@@ -34,7 +34,7 @@
 </template>
 <template name="fleetSetupForm">
   <div class="well" style="height: 300px; padding-top: 0; padding-left: 30px; padding-right:35px; margin-top: 7px">
-    <form class="form-horizontal">
+    <form class="form-horizontal" action="javascript:void(0);">
       <fieldset>
         <div class="form-group">
           <label for="fleetName">  Fleet Name</label>
@@ -43,6 +43,9 @@
         <div class="form-group">
           <label for="motd">MOTD</label>
           <textarea style="max-width:380px;max-height:120px;min-height:120px;height:120px;" class="form-control" id="motd" placeholder="Fleet Description"/>
+        </div>
+        <div style="margin-top: 15px; width: 100%; text-align: center">
+          <button class="btn btn-primary" id="finalizeFleetBtn">Create Fleet</button>
         </div>
       </fieldset>
     </form>
