@@ -1,0 +1,52 @@
+<template name="fleetCommander">
+  <div class="fcContainer">
+    {{>fcLeftBar}}
+    {{>fcMiddle}}
+    {{>fcRightBar}}
+  </div>
+</template>
+
+<template name="fcLeftBar">
+  <div id="fcLeftBar">
+    {{#if membersSelected}}
+    {{>fcMembersList}}
+    {{/if}}
+    {{#if shipsSelected}}
+    {{>fcShipsList}}
+    {{/if}}
+    {{>fcLeftBarButtons}}
+  </div>
+</template>
+
+<template name="fcLeftBarButtons">
+  <div class="buttons">
+    <ul class="nav nav-pills">
+      <li {{#if membersSelected}}class="active"{{/if}}>
+        <a href="" id="membersButton">
+          Members
+          <span class="badge">10</span>
+        </a>
+      </li>
+      <li {{#if shipsSelected}}class="active"{{/if}}>
+        <a href="" id="shipsButton">
+          Ships
+          <span class="badge">3</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<template name="fcMembersList">
+  Members list
+</template>
+
+<template name="fcShipsList">
+  Ships list
+</template>
+
+<template name="fcMiddle">
+</template>
+
+<template name="fcRightBar">
+</template>

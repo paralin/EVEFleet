@@ -1,0 +1,34 @@
+#fcLeftBar
+{
+  width: 200px;
+  height: 100%;
+
+  border-right: 1px solid;
+  border-color: #E6E6E6;
+}
+#fcLeftBar .buttons{
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+#fcLeftBar .buttons li{
+  margin-right: 0;
+  margin-left: 0;
+}
+#fcLeftBar .buttons a{
+  margin-bottom: 0;
+  padding-left: 9px;
+  padding-right: 9px;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.fcContainer{
+  width: 100%;
+  height: 110%;
+  margin-top: 45px;
+  padding: 0;
+}
