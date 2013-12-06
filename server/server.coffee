@@ -65,7 +65,8 @@ Router.map ->
         #loop over keys, look for changes
         for k,v of character
           if headerData[k] isnt v && headerData[k]?
-            console.log character.name+": "+k+" - "+v+" -> "+headerData[k]
+            if k isnt "hostid"
+              console.log character.name+": "+k+" - "+v+" -> "+headerData[k]
             changed = true
         if changed
           Characters.update({_id: character._id}, headerData)

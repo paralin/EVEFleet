@@ -1,0 +1,15 @@
+<head>
+  <title>EVEFleet Fleet Tracking System</title>
+</head>
+<body>
+  {{>layout}}
+  {{>pageDesign}}
+</body>
+<template name="pageDesign">
+  {{#if isBrowser}}
+  {{>browserlayout}}
+  {{/if}}
+</template>
+<template name="layout">
+  {{yield}}
+</template>
