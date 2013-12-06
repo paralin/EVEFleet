@@ -4,4 +4,9 @@ Meteor.startup =>
   Router.map ->
     @route 'home',
       path: '/',
-      template: 'browserSplash'
+      action: ()->
+        user = Meteor.user()
+        if !user?
+          @render 'browserSplash'
+        else
+          @render 'browserHome'

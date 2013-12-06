@@ -9,3 +9,6 @@ coffeescript
 iron-router
 http
 random
+jquery
+accounts-password
+accounts-base
