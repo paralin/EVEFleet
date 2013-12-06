@@ -2,6 +2,7 @@
   "packages": {
     "iron-router": {},
     "bootboxjs": {},
-    "pnotify": {}
+    "pnotify": {},
+    "jquery.transit": {}
   }
 }

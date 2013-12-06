@@ -1,5 +1,16 @@
 Characters = new Meteor.Collection "characters"
 PendingTrust = new Meteor.Collection "truststat"
+Fleets = new Meteor.Collection "fleets"
+
+###
+# Fleets Data
+#
+# name: Fleet Name
+# motd: motd..
+# fcuser: id of the FC
+# active: true/false
+#
+###
 
 #remove temp stuff on start
 PendingTrust.remove({})
@@ -9,6 +20,13 @@ Meteor.publish "trust", ()->
 
 Meteor.publish "characters", (hostHash)->
   Characters.find({hostid: hostHash})
+
+Meteor.publish "fleets", ->
+  Fleets.find({fcuser: @userId, active: true})
+
+Meteor.methods
+  createFleet: (fleetName, motd) ->
+    console.log "Fleet name: "+fleetName+" MOTD: "+motd
 
 Router.map ->
   @route 'bgupdate',
@@ -70,6 +88,7 @@ Router.map ->
             changed = true
         if changed
           Characters.update({_id: character._id}, headerData)
+
 String::hashCode = ->
   hash = 0
   i = undefined

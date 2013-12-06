@@ -7,3 +7,6 @@ cron-tick
 modal-login
 bootboxjs
 pnotify
+/bootboxjs
+/pnotify
+/jquery.transit

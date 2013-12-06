@@ -5,6 +5,9 @@
         <span class="navbar-brand">EVEFleet</span>
       </div>
       <ul class="nav navbar-nav navbar-right">
+        {{#if hasFleet}}
+        <li><a style="margin-right: 20px; cursor: pointer;" id="leavefleetbtn">Leave Fleet</a></li>
+        {{/if}}
         <li><a style="margin-right: 20px; cursor: pointer;" id="logoutbtn">Log Out</a></li>
       </ul>
     </div>

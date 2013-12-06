@@ -9,4 +9,15 @@ Meteor.startup =>
         if !user?
           @render 'browserSplash'
         else
+          if Fleets.findOne()?
+            @redirect("/fleetCommander/")
+            return
           @render 'browserHome'
+    @route 'fleetCommander',
+      path: '/fleetCommander'
+      action: ->
+        user = Meteor.user()
+        if !user? || !Fleets.findOne()?
+          @redirect("/")
+          return
+        @render "fleetCommander"

@@ -1,2 +1,50 @@
 <template name="browserHome">
+  <div class="panel panel-primary" id="startmenu">
+    <div class="panel-heading">
+      <h3 class="panel-title">Start Menu</h3>
+    </div>
+    <div class="panel-body" style="height: 100%">
+      {{#isolate}}
+      <div id="startOptions">
+        {{#unless menuFlipped}}
+        Welcome to EVEFleet! What would you like to do?<br/><br/>
+        <div style="cursor: pointer" class="list-group">
+          <a class="list-group-item" id="createFleetBtn">
+            <h4 class="list-group-item-heading">Create a fleet</h4>
+            <p class="list-group-item-text">Create a new fleet as the Fleet Commander.</p>
+          </a>
+          <a class="list-group-item flipbtn" id="joinFleetBtn" >
+            <h4 class="list-group-item-heading">Join a Fleet</h5>
+            <p class="list-group-item-text">Instructions on how to use the InGame Browser to join a fleet.</p>
+          </a>
+        </div>
+        {{else}}
+        <div style="-webkit-transform: rotateY(-180deg); -moz-transform: rotateY(-180deg); -o-transform: rotateY(-180deg);">
+          Your view is based entirely in the InGame Browser. You will see standing orders, fits and shiptypes for the fleet, and live killboard updates as your fleet proceeds with operations. The browser will also keep the FC updated about all of the fleet members. To join, simply go to the fleet URL given to you by your FC in the ingame browser. You can also go to "{{baseUrl}}" and chose from fleets available to you.<br/><br/><a href="" class="flipbtn">Back</a>
+        </div>
+        {{/unless}}
+      </div>
+      <div id="createFleetForm" style="height: 100%">
+        Set up your fleet!<br/>
+        {{>fleetSetupForm}}  
+      </div>
+      {{/isolate}}
+    </div>
+  </div>
+</template>
+<template name="fleetSetupForm">
+  <div class="well" style="height: 300px; padding-top: 0; padding-left: 30px; padding-right:35px; margin-top: 7px">
+    <form class="form-horizontal">
+      <fieldset>
+        <div class="form-group">
+          <label for="fleetName">  Fleet Name</label>
+          <input type="text" class="form-control" id="fleetName" placeholder="Fleet Name"/>
+        </div>
+        <div class="form-group">
+          <label for="motd">MOTD</label>
+          <textarea style="max-width:380px;max-height:120px;min-height:120px;height:120px;" class="form-control" id="motd" placeholder="Fleet Description"/>
+        </div>
+      </fieldset>
+    </form>
+  </div>
 </template>

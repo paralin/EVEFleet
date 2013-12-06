@@ -6,3 +6,8 @@ Router.configure
   layoutTemplate: 'layout'
 $.pnotify.defaults.history = false
 $.pnotify.defaults.stack.spacing1 = -5
+
+
+Deps.autorun ->
+  user = Meteor.user()
+  Meteor.subscribe "fleets"
