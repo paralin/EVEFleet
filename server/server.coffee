@@ -3,6 +3,8 @@ PendingTrust = new Meteor.Collection "truststat"
 Fleets = new Meteor.Collection "fleets"
 Events = new Meteor.Collection "events"
 
+Fiber = Npm.require 'fibers'
+
 ###
 # Fleets Data
 #
@@ -47,7 +49,7 @@ Meteor.publish "fleetCharacters", ->
   fleet = Fleets.findOne({fcuser: @userId, active: true})
   if !fleet?
     return
-  Characters.find({fleet: fleet._id})
+  Characters.find({fleet: fleet._id, active: true})
 
 Meteor.publish "fleetEvents", ->
   user = Meteor.users.findOne({_id: @userId})
@@ -153,6 +155,8 @@ Router.map ->
           shiptypeid: @request.headers["eve_shiptypeid"]
           fleet: (if character? then character.fleet else null)
           hostid: hostHash
+          active: true
+          lastActiveTime: (new Date).getTime()
 
       #find the character object
       if !character?
@@ -166,11 +170,19 @@ Router.map ->
           if headerData[k] is undefined
             headerData[k] = null
           if headerData[k] isnt v
-            if k isnt "hostid"
+            if not (k in ["hostid", "active", "lastActiveTime"])
               console.log character.name+": "+k+" - "+v+" -> "+headerData[k]
             changed = true
         if changed
           Characters.update({_id: character._id}, headerData)
+
+checkActiveCharacters = ->
+  Fiber(->
+    lastAcceptableTime = (new Date().getTime()) - 10*1000
+    Characters.update({active: true, lastActiveTime: {$lt: lastAcceptableTime}}, {$set: {active: false}}, {multi: true})
+  ).run()
+
+setInterval checkActiveCharacters, 5000
 
 String::hashCode = ->
   hash = 0

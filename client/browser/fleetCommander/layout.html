@@ -47,7 +47,7 @@
 
     <div id="commandersDropdown" class="list-group subitem {{#unless isSelected 'commanders'}}collapse{{/unless}}">
       {{#each commander}}
-      <a href="#" class="list-group-item">
+      <a href="#" class="list-group-item" rel="tooltip" title="{{system}} - {{corpname}}">
         {{username}} 
       </a>
       {{/each}}
@@ -60,7 +60,7 @@
 
     <div id="dockedDropdown" class="list-group subitem {{#unless isSelected 'docked'}}collapse{{/unless}}">
       {{#each dockedCharacters}}
-      <a href="#" class="list-group-item" style="font-size:11px;">
+      <a href="#" class="list-group-item" style="font-size:11px;" rel="tooltip" title="{{system}} - {{corpname}}">
         {{name}} ({{shiptype}}) 
       </a>
       {{/each}}

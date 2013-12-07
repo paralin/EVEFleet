@@ -57,6 +57,10 @@ Template.fcMembersList.commander = ->
 Template.fcMembersList.isSelected = (tab)->
   Session.get("selectedMembersList") is tab
 
+Template.fcMembersList.rendered = ->
+  $("#membersList a[rel=tooltip]").tooltip
+    placement: 'right'
+
 Meteor.startup ->
   Session.set "membersSelected", true
   Session.set "shipsSelected", false
