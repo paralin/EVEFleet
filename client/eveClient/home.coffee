@@ -81,11 +81,10 @@ Meteor.startup =>
       char = Characters.findOne()
       if !char?
         return
-      Meteor.subscribe "igbfleets", Session.get("hostHash")
-    Deps.autorun ->
-      fleet = Fleets.findOne()
-      if !fleet?
+      if !char.fleet?
         return
+      console.log "Fleet: "+char.fleet
+      Meteor.subscribe "igbfleets", Session.get("hostHash")
 
   pathArray = window.location.href.split '/'
   webAddress = pathArray[0]+"//"+pathArray[2]+"/"
