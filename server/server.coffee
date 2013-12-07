@@ -34,7 +34,7 @@ Meteor.methods
     fleet = Fleets.findOne({fcuser: user._id, active: true})
     if fleet?
       throw new Meteor.Error 404, "You've already created a fleet."
-    if 4 < fleetName.length < 30
+    if not (4 <= fleetName.length <= 30)
       throw new Meteor.Error 404, "Your fleet name needs to be 4-30 characters."
     newFleet =
       name: fleetName

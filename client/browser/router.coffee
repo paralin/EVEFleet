@@ -21,3 +21,7 @@ Meteor.startup =>
           @redirect("/")
           return
         @render "fleetCommander"
+    @route 'catchall',
+      path: '/*'
+      action: ->
+        @redirect "/"

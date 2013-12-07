@@ -1,8 +1,10 @@
 <template name="fleetCommander">
   <div class="fcContainer">
+    {{#isolate}}
     {{>fcLeftBar}}
     {{>fcMiddle}}
     {{>fcRightBar}}
+    {{/isolate}}
   </div>
 </template>
 
@@ -38,7 +40,36 @@
 </template>
 
 <template name="fcMembersList">
-  Members list
+  <div id="membersList" class="list-group"> 
+    <a href="#" name="commanders" class="list-group-item {{#if isSelected 'commanders'}}active{{/if}}">
+      <i class="icon-dashboard"></i>Fleet Commanders
+    </a>
+
+    <a href="#" name="docked" class="list-group-item {{#if isSelected 'docked'}}active{{/if}}"  data-parent="#sidebar">
+      <i class="icon-group"></i> Docked
+      <span class="badge bg_danger">1</span>
+    </a>
+
+    <div id="dockedDropdown" class="list-group subitem collapse">
+      <a href="#" class="list-group-item">
+        Morpheus Deathbrew (Sabre)
+      </a>
+    </div>
+
+    <a href="#articles" name="undocked" class="list-group-item {{#if isSelected 'undocked'}}active{{/if}}"  data-parent="#sidebar">
+      <i class="icon-file-text"></i> Undocked
+      <span class="badge bg_danger">8</span>
+    </a>
+
+    <div id="undockedDropdown" class="list-group subitem collapse">
+
+      <a href="#" class="list-group-item">
+        <i class="icon-caret-right"></i> Someguy 
+      </a>
+
+    </div>
+
+  </div>
 </template>
 
 <template name="fcShipsList">
