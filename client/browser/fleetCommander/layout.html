@@ -45,12 +45,20 @@
       <i class="icon-dashboard"></i>Fleet Commanders
     </a>
 
+    <div id="commandersDropdown" class="list-group subitem {{#unless isSelected 'commanders'}}collapse{{/unless}}">
+      {{#each commander}}
+      <a href="#" class="list-group-item">
+        {{username}} 
+      </a>
+      {{/each}}
+    </div>
+
     <a href="#" name="docked" class="list-group-item {{#if isSelected 'docked'}}active{{/if}}"  data-parent="#sidebar">
       <i class="icon-group"></i> Docked
       <span class="badge bg_danger">1</span>
     </a>
 
-    <div id="dockedDropdown" class="list-group subitem collapse">
+    <div id="dockedDropdown" class="list-group subitem {{#unless isSelected 'docked'}}collapse{{/unless}}">
       <a href="#" class="list-group-item">
         Morpheus Deathbrew (Sabre)
       </a>
@@ -61,7 +69,7 @@
       <span class="badge bg_danger">8</span>
     </a>
 
-    <div id="undockedDropdown" class="list-group subitem collapse">
+    <div id="undockedDropdown" class="list-group subitem {{#unless isSelected 'undocked'}}collapse{{/unless}}">
 
       <a href="#" class="list-group-item">
         <i class="icon-caret-right"></i> Someguy 

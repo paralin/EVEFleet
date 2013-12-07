@@ -21,6 +21,15 @@ Meteor.publish "trust", ()->
 Meteor.publish "characters", (hostHash)->
   Characters.find({hostid: hostHash})
 
+Meteor.publish "bcharacters", ->
+  user = Meteor.users.findOne({_id: @userId})
+  if !user?
+    return
+  fleet = Fleets.findOne({fcuser: @userId})
+  if !fleet?
+    return
+  Characters.find({fleet: fleet._id})
+
 Meteor.publish "fleets", ->
   Fleets.find({fcuser: @userId, active: true})
 
@@ -52,6 +61,25 @@ Meteor.methods
       return
     Fleets.update({_id: fleet._id}, {$set: {active: false}})
     console.log "FC "+user.username+" has closed fleet "+fleet._id
+  joinFleet: (hostHash, fleetID)->
+    check hostHash, String
+    check fleetID, String
+    console.log "Looking up fleet: "+fleetID
+    theFleet = Fleets.findOne({_id: fleetID})
+    if !theFleet?
+      throw new Meteor.Error 404, "Couldn't find that fleet."
+    if !theFleet.active
+      throw new Meteor.Error 404, "That fleet is not active anymore."
+    character = Characters.findOne({hostid: hostHash})
+    if !character?
+      throw new Meteor.Error 404, "I can't find you in the system."
+    Characters.update({_id: character._id}, {$set: {fleet: theFleet._id}})
+    console.log "Character '"+character.name+"' joined fleet "+theFleet._id+"."
+  igbLeaveFleet: (hostHash)->
+    character = Characters.findOne({hostid: hostHash})
+    if !character?
+      throw new Meteor.Error 404, "I can't find you in the system."
+    Characters.update({_id: character._id}, {$set: {fleet: undefined}})
 
 Router.map ->
   @route 'bgupdate',

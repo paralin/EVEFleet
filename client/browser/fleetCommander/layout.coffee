@@ -37,10 +37,11 @@ Template.fcMembersList.events
       return
     if name is Session.get "selectedMembersList"
       return
-    lastActive = $("#membersList").children(".active")
-    #lastActive.next('div').collapse('hide')
-    $(e.target).next('div').collapse('hide')
     Session.set "selectedMembersList", $(e.target).attr("name")
+
+Template.fcMembersList.commander = ->
+  #just us for now
+  [Meteor.user()]
 Template.fcMembersList.isSelected = (tab)->
   Session.get("selectedMembersList") is tab
 

@@ -3,6 +3,29 @@ Meteor.startup =>
     return
   Template.eveClient.hasTrust = ->
     Session.get("hasTrust")
+  Template.eveGeneralInfo.hasFleet = ->
+    char = Characters.findOne()
+    if !char?
+      return false
+    else
+      return char.fleet?
+  Template.eveGeneralInfo.fleetId = ->
+    return Characters.findOne().fleet
+  Template.eveGeneralInfo.events
+    'click #joinFleetBtn': ->
+      Meteor.call "joinFleet", Session.get("hostHash"), $("#fleetID").val(), (err, res)->
+        if err?
+          $.pnotify
+            title: "Failed"
+            text: err.reason
+            type: "error"
+    'click #leaveFleetBtn': ->
+      Meteor.call "igbLeaveFleet", Session.get("hostHash"), (err, res)->
+        if err?
+          $.pnotify
+            title: "Failed"
+            text: err.reason
+            type: "error"
   Template.eveGeneralInfo.shipType = ->
     char = Characters.findOne()
     if !char?

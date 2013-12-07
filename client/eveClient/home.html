@@ -13,7 +13,21 @@
    Your character name: {{charName}}<br>
    Your corp name: {{corpName}}<br>
    Your system name: {{systemName}}<br>
-   Your station name: {{stationName}}<br>
+   Your station name: {{stationName}}<br><br>
+
+  {{#if hasFleet}}
+    Your fleet ID: {{fleetId}}<br>
+    <button style="padding: 9px" class="btn btn-danger" id="leaveFleetBtn">Leave Fleet</button>
+    {{else}}
+    <form class="form-horizontal" action="javascript:void(0);">
+      <fieldset>
+        <div class="form-group" style="margin-left: 10px;">
+          Fleet ID: <input type="text" class="form-control" style="width: 200px;height:25px;" id="fleetID"/><br><br>
+              <button class="btn btn-primary" id="joinFleetBtn" style="padding:9px">Join Fleet</button>
+        </div>
+        </fieldset>
+      </form>
+  {{/if}}
 </template>
 <template name="requestTrust">
   <h1>This site needs trust to work.</h1>
