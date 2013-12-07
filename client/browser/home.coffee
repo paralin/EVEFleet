@@ -22,7 +22,7 @@ Template.fleetSetupForm.rendered = ->
   $("#startmenu").stop().css({height: '400px'})
 Template.browserHome.events
   'click .flipbtn': ->
-    $("#startmenu").stop().transition({rotateY: (if joinInstructions then '0deg' else '-180deg')
+    $("#startmenu").stop().transition({perspective: '500px', rotateY: (if joinInstructions then '0deg' else '-180deg')
     }, 600)
     $(".panel-body").transition({opacity: 0}, 290, 'linear', ()->
       Session.set("startMenuFlipped", joinInstructions)
