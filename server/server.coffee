@@ -1,6 +1,7 @@
 Characters = new Meteor.Collection "characters"
 PendingTrust = new Meteor.Collection "truststat"
 Fleets = new Meteor.Collection "fleets"
+Events = new Meteor.Collection "events"
 
 ###
 # Fleets Data
@@ -38,9 +39,7 @@ Meteor.publish "igbfleets", (userHash) ->
   if !char?
     return
   #console.log char.fleet
-  fleets = Fleets.find({_id: char.fleet, active: true})
-  console.log fleets.fetch()[0]
-  return fleets
+  Fleets.find({_id: char.fleet, active: true})
 Meteor.publish "fleetCharacters", ->
   user = Meteor.users.findOne({_id: @userId})
   if !user?
@@ -49,6 +48,15 @@ Meteor.publish "fleetCharacters", ->
   if !fleet?
     return
   Characters.find({fleet: fleet._id})
+
+Meteor.publish "fleetEvents", ->
+  user = Meteor.users.findOne({_id: @userId})
+  if !user?
+    return
+  fleet = Fleets.findOne({fcuser: @userId, active: true})
+  if !fleet?
+    return
+  Events.find({fleet: fleet._id})
 
 Meteor.methods
   createFleet: (fleetName, motd) ->
@@ -67,7 +75,8 @@ Meteor.methods
       motd: motd
       fcuser: user._id
       active: true
-    Fleets.insert(newFleet)
+    newId = Fleets.insert(newFleet)
+    Events.insert({fleet: newId, time: (new Date).getTime(), message: "Fleet created!"})
     console.log "Fleet name: "+fleetName+" MOTD: "+motd
   leaveFleet: ->
     user = Meteor.user()
@@ -77,6 +86,7 @@ Meteor.methods
     if !fleet?
       return
     Fleets.update({_id: fleet._id}, {$set: {active: false}})
+    Characters.update({fleet: fleet._id}, {$set: {fleet: null}}, {multi: true})
     console.log "FC "+user.username+" has closed fleet "+fleet._id
   joinFleet: (hostHash, fleetID)->
     check hostHash, String

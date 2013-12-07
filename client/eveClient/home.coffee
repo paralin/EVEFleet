@@ -66,9 +66,13 @@ Meteor.startup =>
     'click .requestTrustButton': ()->
       requestTrust()
   Template.eveGeneralInfo.fleetName = ->
-    Fleets.findOne().name
+    fleet = Fleets.findOne()
+    return if !fleet?
+    fleet.name
   Template.eveGeneralInfo.fleetMOTD = ->
-    Fleets.findOne().motd
+    fleet = Fleets.findOne()
+    return if !fleet?
+    fleet.motd
 
   Meteor.startup ->
     Meteor.subscribe "trust"
@@ -77,13 +81,11 @@ Meteor.startup =>
       char = Characters.findOne()
       if !char?
         return
-      console.log "Char: "+char.name
       Meteor.subscribe "igbfleets", Session.get("hostHash")
     Deps.autorun ->
       fleet = Fleets.findOne()
       if !fleet?
         return
-      console.log "fleet: "+fleet.name
 
   pathArray = window.location.href.split '/'
   webAddress = pathArray[0]+"//"+pathArray[2]+"/"
