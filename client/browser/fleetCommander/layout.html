@@ -26,13 +26,13 @@
       <li {{#if membersSelected}}class="active"{{/if}}>
         <a href="" id="membersButton">
           Members
-          <span class="badge">10</span>
+          <span class="badge">{{membersCount}}</span>
         </a>
       </li>
       <li {{#if shipsSelected}}class="active"{{/if}}>
         <a href="" id="shipsButton">
           Ships
-          <span class="badge">3</span>
+          <span class="badge">{{undockedShips}}</span>
         </a>
       </li>
     </ul>
@@ -42,7 +42,7 @@
 <template name="fcMembersList">
   <div id="membersList" class="list-group"> 
     <a href="#" name="commanders" class="list-group-item {{#if isSelected 'commanders'}}active{{/if}}">
-      <i class="icon-dashboard"></i>Fleet Commanders
+      Fleet Commanders
     </a>
 
     <div id="commandersDropdown" class="list-group subitem {{#unless isSelected 'commanders'}}collapse{{/unless}}">
@@ -54,27 +54,29 @@
     </div>
 
     <a href="#" name="docked" class="list-group-item {{#if isSelected 'docked'}}active{{/if}}"  data-parent="#sidebar">
-      <i class="icon-group"></i> Docked
-      <span class="badge bg_danger">1</span>
+      Docked
+      <span class="badge bg_danger">{{dockedCharactersCount}}</span>
     </a>
 
     <div id="dockedDropdown" class="list-group subitem {{#unless isSelected 'docked'}}collapse{{/unless}}">
-      <a href="#" class="list-group-item">
-        Morpheus Deathbrew (Sabre)
+      {{#each dockedCharacters}}
+      <a href="#" class="list-group-item" style="font-size:11px;">
+        {{name}} ({{shiptype}}) 
       </a>
+      {{/each}}
     </div>
 
     <a href="#articles" name="undocked" class="list-group-item {{#if isSelected 'undocked'}}active{{/if}}"  data-parent="#sidebar">
-      <i class="icon-file-text"></i> Undocked
-      <span class="badge bg_danger">8</span>
+      Undocked
+      <span class="badge bg_danger">{{undockedCharactersCount}}</span>
     </a>
 
     <div id="undockedDropdown" class="list-group subitem {{#unless isSelected 'undocked'}}collapse{{/unless}}">
-
-      <a href="#" class="list-group-item">
-        <i class="icon-caret-right"></i> Someguy 
+      {{#each undockedCharacters}}
+      <a href="#" class="list-group-item" style="font-size:11px;">
+        {{name}} ({{shiptype}}) 
       </a>
-
+      {{/each}}
     </div>
 
   </div>

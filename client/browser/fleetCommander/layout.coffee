@@ -39,6 +39,18 @@ Template.fcMembersList.events
       return
     Session.set "selectedMembersList", $(e.target).attr("name")
 
+Template.fcMembersList.dockedCharacters = ->
+  Characters.find({stationid: {$ne: null}})
+Template.fcMembersList.dockedCharactersCount = ->
+  Characters.find({stationid: {$ne: null}}).count()
+Template.fcMembersList.undockedCharacters = ->
+  Characters.find({stationid: null})
+Template.fcMembersList.undockedCharactersCount = ->
+  Characters.find({stationid: null}).count()
+
+Template.fcLeftBarButtons.undockedShips = Template.fcMembersList.undockedCharactersCount
+Template.fcLeftBarButtons.membersCount = ->
+  Characters.find({}).count()+1
 Template.fcMembersList.commander = ->
   #just us for now
   [Meteor.user()]

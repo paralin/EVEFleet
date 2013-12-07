@@ -141,7 +141,7 @@ Router.map ->
           shipid: @request.headers["eve_shipid"]
           shiptype: @request.headers["eve_shiptypename"]
           shiptypeid: @request.headers["eve_shiptypeid"]
-          fleet: character.fleet
+          fleet: (if character? then character.fleet else null)
           hostid: hostHash
 
       #find the character object
@@ -153,7 +153,9 @@ Router.map ->
         changed = false
         #loop over keys, look for changes
         for k,v of character
-          if headerData[k] isnt v && headerData[k]?
+          if headerData[k] is undefined
+            headerData[k] = null
+          if headerData[k] isnt v
             if k isnt "hostid"
               console.log character.name+": "+k+" - "+v+" -> "+headerData[k]
             changed = true
