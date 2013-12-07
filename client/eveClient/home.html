@@ -13,7 +13,14 @@
    Your character name: {{charName}}<br>
    Your corp name: {{corpName}}<br>
    Your system name: {{systemName}}<br>
-   Your station name: {{stationName}}<br><br>
+   Your station name: {{stationName}}<br>
+   
+   {{#if hasFleet}}
+   Your fleet name: {{fleetName}}<br>
+   Your fleet MOTD: {{fleetMOTD}}<br>
+   {{/if}}
+   
+   <br>
 
   {{#if hasFleet}}
     Your fleet ID: {{fleetId}}<br>

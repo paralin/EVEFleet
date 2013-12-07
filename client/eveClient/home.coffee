@@ -65,15 +65,28 @@ Meteor.startup =>
   Template.requestTrust.events
     'click .requestTrustButton': ()->
       requestTrust()
+  Template.eveGeneralInfo.fleetName = ->
+    Fleets.findOne().name
+  Template.eveGeneralInfo.fleetMOTD = ->
+    Fleets.findOne().motd
 
   Meteor.startup ->
     Meteor.subscribe "trust"
     Meteor.subscribe "characters", Session.get("hostHash")
+    Deps.autorun ->
+      char = Characters.findOne()
+      if !char?
+        return
+      console.log "Char: "+char.name
+      Meteor.subscribe "igbfleets", Session.get("hostHash")
+    Deps.autorun ->
+      fleet = Fleets.findOne()
+      if !fleet?
+        return
+      console.log "fleet: "+fleet.name
 
   pathArray = window.location.href.split '/'
   webAddress = pathArray[0]+"//"+pathArray[2]+"/"
 
   requestTrust = ()->
     eveHandle.requestTrust webAddress+"*"
-
-

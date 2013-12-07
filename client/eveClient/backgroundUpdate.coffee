@@ -12,6 +12,8 @@ Meteor.startup ->
         console.log "Error trying to update the server with our status, "+err
         return
       trustStatus = TrustStatus.findOne({ident: Session.get("hostHash")})
+      if !trustStatus?
+        return
       if Session.get("hasTrust") isnt trustStatus.status
         Session.set("hasTrust", trustStatus.status)  #  Session.set("hostHash", hostHash)
   setInterval(updateRequest, 3000)

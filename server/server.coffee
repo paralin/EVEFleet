@@ -32,6 +32,23 @@ Meteor.publish "bcharacters", ->
 
 Meteor.publish "fleets", ->
   Fleets.find({fcuser: @userId, active: true})
+Meteor.publish "igbfleets", (userHash) ->
+  check userHash, String
+  char = Characters.findOne({hostid: userHash})
+  if !char?
+    return
+  #console.log char.fleet
+  fleets = Fleets.find({_id: char.fleet, active: true})
+  console.log fleets.fetch()[0]
+  return fleets
+Meteor.publish "fleetCharacters", ->
+  user = Meteor.users.findOne({_id: @userId})
+  if !user?
+    return
+  fleet = Fleets.findOne({fcuser: @userId, active: true})
+  if !fleet?
+    return
+  Characters.find({fleet: fleet._id})
 
 Meteor.methods
   createFleet: (fleetName, motd) ->
@@ -108,6 +125,7 @@ Router.map ->
         return
 
       #parse the new data
+      character = Characters.findOne({charId: @request.headers["eve_charid"]})
       headerData =
           charId: @request.headers["eve_charid"]
           name: @request.headers["eve_charname"]
@@ -123,10 +141,10 @@ Router.map ->
           shipid: @request.headers["eve_shipid"]
           shiptype: @request.headers["eve_shiptypename"]
           shiptypeid: @request.headers["eve_shiptypeid"]
+          fleet: character.fleet
           hostid: hostHash
 
       #find the character object
-      character = Characters.findOne({charId: @request.headers["eve_charid"]})
       if !character?
         console.log "new character registered: "+@request.headers["eve_charname"]
         headerData._id = Characters.insert(headerData)

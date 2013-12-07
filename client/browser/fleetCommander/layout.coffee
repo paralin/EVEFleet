@@ -48,3 +48,4 @@ Template.fcMembersList.isSelected = (tab)->
 Meteor.startup ->
   Session.set "membersSelected", true
   Session.set "shipsSelected", false
+  Meteor.subscribe "fleetCharacters"
