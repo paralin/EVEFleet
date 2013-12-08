@@ -66,5 +66,10 @@
   float:left;
   margin: 0;
   height: 100%;
-  width: calc(100%-200px);
+  width: calc(100% - 220px);
+}
+
+#fcMiddle svg{
+  width: 100%;
+  height: calc(100% - 60px);
 }

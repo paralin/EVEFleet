@@ -1,9 +1,9 @@
 {
   "packages": {
     "iron-router": {},
-    "bootboxjs": {},
     "pnotify": {},
     "jquery.transit": {},
-    "font-awesome": {}
+    "font-awesome": {},
+    "d3js-package": {}
   }
 }
