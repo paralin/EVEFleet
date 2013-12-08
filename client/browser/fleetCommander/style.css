@@ -1,5 +1,6 @@
 #fcLeftBar
 {
+  float:left;
   width: 205px;
   height: 100%;
 
@@ -59,4 +60,11 @@
 }
 .charItem{
   padding:5px !important;
+}
+
+#fcMiddle{
+  float:left;
+  margin: 0;
+  height: 100%;
+  width: calc(100%-200px);
 }
