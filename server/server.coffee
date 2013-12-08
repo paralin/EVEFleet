@@ -49,7 +49,7 @@ Meteor.publish "fleetCharacters", ->
   fleet = Fleets.findOne({fcuser: @userId, active: true})
   if !fleet?
     return
-  Characters.find({fleet: fleet._id, active: true})
+  Characters.find({fleet: fleet._id}, {fields: {lastActiveTime:0}})
 
 Meteor.publish "fleetEvents", ->
   user = Meteor.users.findOne({_id: @userId})
@@ -172,9 +172,9 @@ Router.map ->
           if headerData[k] isnt v
             if not (k in ["hostid", "active", "lastActiveTime"])
               console.log character.name+": "+k+" - "+v+" -> "+headerData[k]
-            changed = true
-        if changed
-          Characters.update({_id: character._id}, headerData)
+            update = {}
+            update[k] = headerData[k]
+            Characters.update({_id: character._id}, {$set: update})
 
 checkActiveCharacters = ->
   Fiber(->

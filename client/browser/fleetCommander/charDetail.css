@@ -1,0 +1,41 @@
+#charDetailCont{
+  position: absolute;
+  width: 100%;
+
+}
+#chardetail {
+  margin-top: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 450px;
+  height: 235px;
+  position:relative;
+  top: 150px;
+  box-shadow: 0px 0px 9px #555;
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transformStyle: 'preserve-3d';
+}
+
+#chardetail .panel-title{
+  padding-top:8px;
+  width: 345px;
+}
+
+#chardetail .panel-heading{
+  height:35px;
+}
+
+.panelCloseBtn{
+  height: 33px;
+  margin: 0;
+  position: relative;
+  right: -12px;
+  width: 33px;
+  padding: 0 !important;
+}
+
+#chardetail .profilePic{
+  width: 155px;
+}

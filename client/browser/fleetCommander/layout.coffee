@@ -38,15 +38,22 @@ Template.fcMembersList.events
     if name is Session.get "selectedMembersList"
       return
     Session.set "selectedMembersList", $(e.target).attr("name")
+  'click .charItem':(e)->
+    Session.set "selectedChar", @
 
 Template.fcMembersList.dockedCharacters = ->
-  Characters.find({stationid: {$ne: null}})
+  Characters.find({stationid: {$ne: null}, active: true})
 Template.fcMembersList.dockedCharactersCount = ->
-  Characters.find({stationid: {$ne: null}}).count()
+  Template.fcMembersList.dockedCharacters().count()
 Template.fcMembersList.undockedCharacters = ->
-  Characters.find({stationid: null})
+  Characters.find({stationid: null, active: true})
 Template.fcMembersList.undockedCharactersCount = ->
-  Characters.find({stationid: null}).count()
+  Template.fcMembersList.undockedCharacters().count()
+
+Template.fcMembersList.inactiveCharacters = ->
+  Characters.find({active: false})
+Template.fcMembersList.inactiveCharactersCount = ->
+  Template.fcMembersList.inactiveCharacters().count()
 
 Template.fcLeftBarButtons.undockedShips = Template.fcMembersList.undockedCharactersCount
 Template.fcLeftBarButtons.membersCount = ->

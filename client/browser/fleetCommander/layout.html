@@ -9,6 +9,7 @@
 </template>
 
 <template name="fcLeftBar">
+  {{>fleetMemberDetail}}
   <div id="fcLeftBar">
     {{#if membersSelected}}
     {{>fcMembersList}}
@@ -19,6 +20,37 @@
     {{>fcLeftBarButtons}}
   </div>
 </template>
+
+<template name="fleetMemberDetail">
+  {{#if hasChar}}
+  {{#with selChar}}
+  <div id="charDetailCont">
+  <div class="panel panel-primary" id="chardetail">
+    <div class="panel-heading" style="padding-top: 0">
+      <h3 class="panel-title pull-left">{{name}}</h3>
+      <button class="panelCloseBtn btn btn-primary pull-right">✖</button>
+    </div>
+    <div class="panel-body" style="height: 100%">
+      {{#isolate}}
+      <div class="pull-left profilePic">
+      <img src="http://image.eveonline.com/Character/{{charId}}_200.jpg"/>
+      </div>
+      <div class="pull-right characterInfo">
+        <b>System:</b> {{system}}<br>
+        <b>Station:</b> {{stationname}}<br>
+        <b>Ship:</b> {{shiptype}}<br>
+        <b>Ship Name:</b> {{shipname}}<br>
+        <b>Corp:</b> {{corpname}}<br>
+        <b>Alliance:</b> {{alliancename}}<br>
+      </div>
+      {{/isolate}}
+    </div>
+  </div>
+</div>
+{{/with}}
+{{/if}}
+</template>
+
 
 <template name="fcLeftBarButtons">
   <div class="buttons">
@@ -47,7 +79,7 @@
 
     <div id="commandersDropdown" class="list-group subitem {{#unless isSelected 'commanders'}}collapse{{/unless}}">
       {{#each commander}}
-      <a href="#" class="list-group-item" rel="tooltip" title="{{system}} - {{corpname}}">
+      <a href="#" class="list-group-item">
         {{username}} 
       </a>
       {{/each}}
@@ -60,20 +92,33 @@
 
     <div id="dockedDropdown" class="list-group subitem {{#unless isSelected 'docked'}}collapse{{/unless}}">
       {{#each dockedCharacters}}
-      <a href="#" class="list-group-item" style="font-size:11px;" rel="tooltip" title="{{system}} - {{corpname}}">
+      <a href="#" class="list-group-item charItem" style="font-size:11px;" rel="tooltip" title="{{system}} - {{corpname}}">
         {{name}} ({{shiptype}}) 
       </a>
       {{/each}}
     </div>
 
-    <a href="#articles" name="undocked" class="list-group-item {{#if isSelected 'undocked'}}active{{/if}}"  data-parent="#sidebar">
+    <a href="#" name="undocked" class="list-group-item {{#if isSelected 'undocked'}}active{{/if}}"  data-parent="#sidebar">
       Undocked
       <span class="badge bg_danger">{{undockedCharactersCount}}</span>
     </a>
 
     <div id="undockedDropdown" class="list-group subitem {{#unless isSelected 'undocked'}}collapse{{/unless}}">
       {{#each undockedCharacters}}
-      <a href="#" class="list-group-item" style="font-size:11px;">
+      <a href="#" class="list-group-item charItem" style="font-size:11px;" rel="tooltip" title="{{system}} - {{corpname}}">
+        {{name}} ({{shiptype}}) 
+      </a>
+      {{/each}}
+    </div>
+
+    <a href="#" name="inactive" class="list-group-item {{#if isSelected 'inactive'}}active{{/if}}" rel="tooltip" title="These characters have closed the IGB interface.">
+      Inactive 
+      <span class="badge bg_danger">{{inactiveCharactersCount}}</span>
+    </a>
+
+    <div id="inactiveDropdown" class="list-group subitem {{#unless isSelected 'inactive'}}collapse{{/unless}}">
+      {{#each inactiveCharacters}}
+      <a href="#" class="list-group-item charItem" style="font-size:11px;" rel="tooltip" title="{{system}} - {{corpname}}">
         {{name}} ({{shiptype}}) 
       </a>
       {{/each}}
