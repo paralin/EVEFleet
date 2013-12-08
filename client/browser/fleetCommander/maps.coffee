@@ -1,5 +1,6 @@
 height = null
 width = null
+nodeContainer = null
 svg = null
 Session.set("mapRegion", "Derelik")
 
@@ -16,7 +17,7 @@ $(window).resize resizeHandler
 
 redraw = ->
   #console.log "here", d3.event.translate, d3.event.scale
-  svg.attr "transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")"
+  nodeContainer.attr "transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")"
 
 Template.fcMiddle.rendered = ->
   svg = d3.select("#fcMiddle").append("svg").attr("width", width).attr("height", height).attr("pointer-events", "all")
@@ -25,16 +26,17 @@ Template.fcMiddle.rendered = ->
 rerender = ->
   $("#fcMiddle svg").empty()
   svg.append('svg:g').call(d3.behavior.zoom().on("zoom", redraw)).append('svg:g').append('svg:rect').attr('width', width).attr('height', height).attr('fill', 'white')
+  nodeContainer = svg.append('svg:g').attr('width', width).attr('height', height)
   color = d3.scale.category20()
-  force = d3.layout.force().size([width, height]).charge(-200).gravity(0.05)#.linkDistance(30)
+  force = d3.layout.force().size([width, height]).charge(-200).gravity(0.05).linkDistance(30)
   d3.json "/data/"+Session.get("mapRegion")+".json", (error, graph) ->
     console.log graph
     svg.append("text").attr("x", (width / 2)).attr("y", '50px').style("font-weight", "bold").attr("text-anchor", "middle").style("font-size", "24px").text(Session.get("mapRegion"))
     force.nodes(graph.systems).links(graph.jumps).start()
-    link = svg.selectAll(".link").data(graph.jumps).enter().append("line").attr("class", "link").style("stroke-width", (d) ->
+    link = nodeContainer.selectAll(".link").data(graph.jumps).enter().append("line").attr("class", "link").style("stroke-width", (d) ->
       Math.sqrt d.value
     )
-    node = svg.selectAll(".node").data(graph.systems).enter().append("g").attr("class", "node").call(force.drag)
+    node = nodeContainer.selectAll(".node").data(graph.systems).enter().append("g").attr("class", "node").call(force.drag)
     node.append("text").attr("dx", 12).attr("dy", ".35em").text (d) ->
       d.name
     node.append("circle").attr("r", 5)
