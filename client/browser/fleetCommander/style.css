@@ -73,3 +73,18 @@
   width: 100%;
   height: calc(100% - 60px);
 }
+
+#fcMiddle .link {
+  fill:none;
+  stroke:#666;
+  stroke-width:1.5px;
+}
+#fcMiddle .node circle{
+  fill:#ccc;
+  stroke:#fff;
+  stroke-width:1.5px;
+}
+#fcMiddle .node text {
+  font: 10px sans-serif;
+  pointer-events: none
+}
