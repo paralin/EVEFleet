@@ -3,6 +3,7 @@
     "iron-router": {},
     "pnotify": {},
     "jquery.transit": {},
-    "font-awesome": {}
+    "font-awesome": {},
+    "tinycolor": {}
   }
 }

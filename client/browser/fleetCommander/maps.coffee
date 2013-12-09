@@ -2,7 +2,7 @@ height = null
 width = null
 nodeContainer = null
 svg = null
-Session.set("mapRegion", "Derelik")
+Session.set("mapRegion", "Delve")
 
 resizeHandler = ->
   route = Router.current()
@@ -25,7 +25,7 @@ Template.fcMiddle.rendered = ->
   
 rerender = ->
   $("#fcMiddle svg").empty()
-  svg.append('svg:g').call(d3.behavior.zoom().on("zoom", redraw)).append('svg:g').append('svg:rect').attr('width', width).attr('height', height).attr('fill', 'white')
+  svg.append('svg:g').call(d3.behavior.zoom().scaleExtent([0.7, 5]).on("zoom", redraw)).append('svg:g').append('svg:rect').attr('width', width).attr('height', height).attr('fill', 'white')
   nodeContainer = svg.append('svg:g').attr('width', width).attr('height', height)
   color = d3.scale.category20()
   force = d3.layout.force().size([width, height]).charge(-200).gravity(0.05).linkDistance(30)
@@ -39,7 +39,18 @@ rerender = ->
     node = nodeContainer.selectAll(".node").data(graph.systems).enter().append("g").attr("class", "node").call(force.drag)
     node.append("text").attr("dx", 12).attr("dy", ".35em").text (d) ->
       d.name
-    node.append("circle").attr("r", 5)
+    node.append("circle").attr("r", 5).style("fill", (d)->
+      if d.security is -1
+        tinycolor("purple").toHex()
+      else
+        if d.security < 0
+          d.security = 0
+        val = d.security * 100
+        hue = Math.floor (val)*120/100
+        saturation = 1
+        color = tinycolor("hsv "+hue+" 100% 100%")
+        color.toHex()
+    )
   
     force.on "tick", ->
       link.attr("x1", (d) ->

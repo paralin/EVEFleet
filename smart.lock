@@ -5,7 +5,8 @@
       "iron-router": {},
       "pnotify": {},
       "jquery.transit": {},
-      "font-awesome": {}
+      "font-awesome": {},
+      "tinycolor": {}
     },
     "packages": {
       "iron-router": {
@@ -27,6 +28,11 @@
         "git": "https://github.com/nate-strauser/meteor-font-awesome.git",
         "tag": "v4.0.3",
         "commit": "61e9361384347547ae144f8228faa4deffda23db"
+      },
+      "tinycolor": {
+        "git": "https://github.com/kidovate/meteor-tinycolor.git",
+        "tag": "v0.9.17",
+        "commit": "3895f74e7841027f88f87e134e6400378f6f5b34"
       }
     }
   }
