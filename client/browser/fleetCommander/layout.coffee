@@ -1,6 +1,9 @@
 pathArray = window.location.href.split '/'
 webAddress = pathArray[0]+"//"+pathArray[2]+"/"
 hasRendered = false
+regionList = null
+Meteor.startup ->
+  regionList = @regions
 Session.set "selectedMembersList", "commanders"
 Deps.autorun ->
   route = Router.current()
@@ -67,6 +70,17 @@ Template.fcMembersList.commander = ->
   [Meteor.user()]
 Template.fcMembersList.isSelected = (tab)->
   Session.get("selectedMembersList") is tab
+Template.fcMapCtrls.rendered = ->
+  #console.log regionList
+  $("#regionInput").autocomplete
+    lookup: regionList
+Template.fcMapCtrls.events
+  'keyup #regionInput': ->
+    region = $("#regionInput").val()
+    if !(region in regionList)
+      return
+    Session.set "mapRegion", region
+  
 
 Template.fcMembersList.rendered = ->
   $("#membersList a[rel=tooltip]").tooltip

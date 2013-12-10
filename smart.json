@@ -4,6 +4,7 @@
     "pnotify": {},
     "jquery.transit": {},
     "font-awesome": {},
-    "tinycolor": {}
+    "tinycolor": {},
+    "jquery.autocomplete": {}
   }
 }

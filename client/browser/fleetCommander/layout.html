@@ -134,7 +134,13 @@
   Ships list
 </template>
 
+<template name="fcMapCtrls">
+<div id="fcMapCtrl" class="well well-sm form-group" >
+    Region: <input type="text" value="Cloud Ring" class="form-control" id="regionInput"/>
+</div>
+</template> 
 <template name="fcMiddle">
+  {{>fcMapCtrls}}
   <div id="fcMiddle">
   </div>
 </template>
