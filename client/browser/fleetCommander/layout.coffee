@@ -1,3 +1,5 @@
+pathArray = window.location.href.split '/'
+webAddress = pathArray[0]+"//"+pathArray[2]+"/"
 hasRendered = false
 Session.set "selectedMembersList", "commanders"
 Deps.autorun ->
@@ -40,6 +42,8 @@ Template.fcMembersList.events
     Session.set "selectedMembersList", $(e.target).attr("name")
   'click .charItem':(e)->
     Session.set "selectedChar", @
+  'click #inviteMembersBtn': ->
+    window.prompt "Copy the following link to the clipboard and have fleet members open it in the InGame Browser!", webAddress+"f/"+Fleets.findOne()._id
 
 Template.fcMembersList.dockedCharacters = ->
   Characters.find({stationid: {$ne: null}, active: true})

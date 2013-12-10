@@ -6,4 +6,4 @@ Template.browserlayout.events
 Template.browserlayout.hasFleet = ->
   Fleets.findOne()?
 Template.browserlayout.fleetName = ->
-  Fleets.findOne().name+" - "+Fleets.findOne()._id
+  Fleets.findOne().name

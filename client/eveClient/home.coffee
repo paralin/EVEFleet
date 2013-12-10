@@ -1,6 +1,22 @@
 Meteor.startup =>
   if not @eveClient
     return
+  Deps.autorun ->
+    pfleet = Session.get("pendingFleet")
+    trust = Session.get("hasTrust")
+    if !trust? or !trust
+      return
+    if pfleet?
+      delete Session.keys["pendingFleet"]
+      if Template.eveGeneralInfo.hasFleet()
+        Meteor.call "igbLeaveFleet", Session.get("hostHash"), (err, res)->
+          console.log "Attempted to leave fleet automatically"
+      Meteor.call "joinFleet", Session.get("hostHash"), pfleet, (err, res)->
+        if err?
+          $.pnotify
+            title: "Couldn't Join Fleet"
+            text: err.reason
+            type: "error"
   Template.eveClient.hasTrust = ->
     Session.get("hasTrust")
   Template.eveGeneralInfo.hasFleet = ->
@@ -13,12 +29,7 @@ Meteor.startup =>
     return Characters.findOne().fleet
   Template.eveGeneralInfo.events
     'click #joinFleetBtn': ->
-      Meteor.call "joinFleet", Session.get("hostHash"), $("#fleetID").val(), (err, res)->
-        if err?
-          $.pnotify
-            title: "Failed"
-            text: err.reason
-            type: "error"
+      Session.set("pendingFleet", $("#fleetID").val())
     'click #leaveFleetBtn': ->
       Meteor.call "igbLeaveFleet", Session.get("hostHash"), (err, res)->
         if err?
