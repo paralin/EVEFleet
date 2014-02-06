@@ -132,46 +132,20 @@
 
 <template name="fcShipsList">
   <div id="membersList" class="list-group"> 
-    <!--TODO: CHANGE THESE TO SHIP TYPES-->
-    <a href="#" name="docked" class="list-group-item {{#if isSelected 'docked'}}active{{/if}}"  data-parent="#sidebar">
-      Docked
-      <span class="badge bg_danger">{{dockedCharactersCount}}</span>
+    {{#each shipTypes}}
+    <a href="#" name="{{id}}" class="shiptype-item list-group-item {{#if isSelected}}active{{/if}}"  data-parent="#sidebar">
+      {{name}}
+      <span class="badge bg_danger">{{count}}</span>
     </a>
 
-    <div id="dockedDropdown" class="list-group subitem {{#unless isSelected 'docked'}}collapse{{/unless}}">
-      {{#each dockedCharacters}}
-      <a href="#" class="list-group-item charItem" style="font-size:11px;" rel="tooltip" title="{{system}} - {{corpname}}">
-        {{name}} ({{shiptype}}) 
+    <div class="list-group subitem {{#unless isSelected}}collapse{{/unless}}">
+      {{#each characters}}
+      <a href="#" class="list-group-item charItem" style="font-size:11px;" rel="tooltip" title="{{corpname}} - {{alliancename}}">
+        {{name}} ({{system}}) 
       </a>
       {{/each}}
     </div>
-
-    <a href="#" name="undocked" class="list-group-item {{#if isSelected 'undocked'}}active{{/if}}"  data-parent="#sidebar">
-      Undocked
-      <span class="badge bg_danger">{{undockedCharactersCount}}</span>
-    </a>
-
-    <div id="undockedDropdown" class="list-group subitem {{#unless isSelected 'undocked'}}collapse{{/unless}}">
-      {{#each undockedCharacters}}
-      <a href="#" class="list-group-item charItem" style="font-size:11px;" rel="tooltip" title="{{system}} - {{corpname}}">
-        {{name}} ({{shiptype}}) 
-      </a>
-      {{/each}}
-    </div>
-
-    <a href="#" name="inactive" class="list-group-item {{#if isSelected 'inactive'}}active{{/if}}" rel="tooltip" title="These characters have closed the IGB interface.">
-      Inactive 
-      <span class="badge bg_danger">{{inactiveCharactersCount}}</span>
-    </a>
-
-    <div id="inactiveDropdown" class="list-group subitem {{#unless isSelected 'inactive'}}collapse{{/unless}}">
-      {{#each inactiveCharacters}}
-      <a href="#" class="list-group-item charItem" style="font-size:11px;" rel="tooltip" title="{{system}} - {{corpname}}">
-        {{name}} ({{shiptype}}) 
-      </a>
-      {{/each}}
-    </div>
-
+    {{/each}}
   </div>
 </template>
 

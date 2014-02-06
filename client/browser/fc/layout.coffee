@@ -57,6 +57,18 @@ Template.fcMembersList.undockedCharacters = ->
 Template.fcMembersList.undockedCharactersCount = ->
   Template.fcMembersList.undockedCharacters().count()
 
+Template.fcShipsList.events
+  'click .shiptype-item': (e)->
+    e.preventDefault()
+    if @id is Session.get "selectedShipsList"
+      return
+    Session.set "selectedShipsList", @id
+  'click .charItem':(e)->
+    Session.set "selectedChar", @
+
+Template.fcShipsList.isSelected = ->
+  Session.get("selectedShipsList") is @id
+
 Template.fcShipsList.shipTypes = ->
   shipTypes = {}
   for character in Characters.find({active: true}).fetch()
@@ -66,13 +78,17 @@ Template.fcShipsList.shipTypes = ->
        type =
          id: character.shiptypeid
          name: character.shiptype
+         count: 0
          characters: []
     type.characters.push character
+    type.count++
+    shipTypes[character.shiptypeid] = type
   result = []
-  for k, v in shipTypes
+  for k, v of shipTypes
     result.push
-      name: k
-      id: v.id
+      name: v.name
+      id: k
+      count: v.count
       characters: v.characters
   result
 
