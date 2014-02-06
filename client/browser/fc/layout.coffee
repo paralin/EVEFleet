@@ -57,6 +57,13 @@ Template.fcMembersList.undockedCharacters = ->
 Template.fcMembersList.undockedCharactersCount = ->
   Template.fcMembersList.undockedCharacters().count()
 
+Template.fcShipsList.shipTypes = ->
+  shipTypes = []
+  for character in Characters.find({active: true}).fetch()
+    console.log "character "+character
+  
+
+
 Template.fcMembersList.inactiveCharacters = ->
   Characters.find({active: false})
 Template.fcMembersList.inactiveCharactersCount = ->
