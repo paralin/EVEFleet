@@ -1,4 +1,3 @@
-@PendingTrust = new Meteor.Collection "pendtrust"
 Fiber = Npm.require 'fibers'
 
 ###
@@ -12,10 +11,10 @@ Fiber = Npm.require 'fibers'
 ###
 
 #remove temp stuff on start
-PendingTrust.remove({})
+TrustStatus.remove({})
 
 Meteor.publish "trust", ()->
-  PendingTrust.find({})
+  TrustStatus.find({})
 
 Meteor.publish "characters", (hostHash)->
   Characters.find({hostid: hostHash})
@@ -118,14 +117,14 @@ Router.map ->
       host = @request.connection.remoteAddress
       trusted = @request.headers["eve_trusted"] is "Yes"
       hostHash = @request.headers["ident"]
-      trustStatus = PendingTrust.findOne({ident: hostHash})
+      trustStatus = TrustStatus.findOne({ident: hostHash})
       if !trustStatus?
         trustStatus = {ident: hostHash, status: trusted}
-        trustStatus._id = PendingTrust.insert(trustStatus)
+        trustStatus._id = TrustStatus.insert(trustStatus)
       if trustStatus.status isnt trusted
         console.log "user "+(if trusted then @request.headers["eve_charname"] else hostHash)+" is now "+(if trusted then "trusted" else "not trusted")
         trustStatus.status = trusted
-        PendingTrust.update({_id: trustStatus._id}, {$set: {status: trusted}})
+        TrustStatus.update({_id: trustStatus._id}, {$set: {status: trusted}})
       @response.writeHead 200, {'Content-Type': 'text/html'}
       @response.end ""+hostHash
 
