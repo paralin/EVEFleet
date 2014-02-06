@@ -19,15 +19,6 @@ Meteor.publish "trust", ()->
 Meteor.publish "characters", (hostHash)->
   Characters.find({hostid: hostHash})
 
-Meteor.publish "bcharacters", ->
-  user = Meteor.users.findOne({_id: @userId})
-  if !user?
-    return
-  fleet = Fleets.findOne({fcuser: @userId})
-  if !fleet?
-    return
-  Characters.find({fleet: fleet._id})
-
 Meteor.publish "fleets", ->
   Fleets.find({fcuser: @userId, active: true})
 Meteor.publish "igbfleets", (userHash) ->
@@ -169,7 +160,8 @@ Router.map ->
               console.log character.name+": "+k+" - "+v+" -> "+headerData[k]
             update = {}
             update[k] = headerData[k]
-            Characters.update({_id: character._id}, {$set: update})
+            if update isnt {}
+              Characters.update({_id: character._id}, {$set: update})
 
 checkActiveCharacters = ->
   Fiber(->
