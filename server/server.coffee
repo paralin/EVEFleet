@@ -1,8 +1,4 @@
-Characters = new Meteor.Collection "characters"
-PendingTrust = new Meteor.Collection "truststat"
-Fleets = new Meteor.Collection "fleets"
-Events = new Meteor.Collection "events"
-
+@PendingTrust = new Meteor.Collection "pendtrust"
 Fiber = Npm.require 'fibers'
 
 ###
