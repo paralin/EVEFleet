@@ -24,8 +24,8 @@
 <template name="fleetMemberDetail">
   {{#if hasChar}}
   {{#with selChar}}
-  <div id="charDetailCont">
-  <div class="panel panel-primary" id="chardetail">
+  <div id="charDetailCont" style="pointer-events:none">
+  <div class="panel panel-primary" id="chardetail" style="pointer-events:all">
     <div class="panel-heading" style="padding-top: 0">
       <h3 class="panel-title pull-left">{{name}}</h3>
       <button class="panelCloseBtn btn btn-primary pull-right">✖</button>
@@ -33,7 +33,7 @@
     <div class="panel-body" style="height: 100%">
       {{#isolate}}
       <div class="pull-left profilePic">
-      <img src="http://image.eveonline.com/Character/{{charId}}_200.jpg"/>
+      <img style="width:150px;height:150px;" src="http://image.eveonline.com/Character/{{charId}}_200.jpg"/>
       </div>
       <div class="pull-right characterInfo">
         <b>System:</b> {{system}}<br>
