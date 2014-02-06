@@ -58,11 +58,23 @@ Template.fcMembersList.undockedCharactersCount = ->
   Template.fcMembersList.undockedCharacters().count()
 
 Template.fcShipsList.shipTypes = ->
-  shipTypes = []
+  shipTypes = {}
   for character in Characters.find({active: true}).fetch()
-    console.log "character "+character
-  
-
+    type = shipTypes[character.shiptypeid] #even capsule has a type
+    if !type?
+       #even capsule has a type
+       type =
+         id: character.shiptypeid
+         name: character.shiptype
+         characters: []
+    type.characters.push character
+  result = []
+  for k, v in shipTypes
+    result.push
+      name: k
+      id: v.id
+      characters: v.characters
+  result
 
 Template.fcMembersList.inactiveCharacters = ->
   Characters.find({active: false})
