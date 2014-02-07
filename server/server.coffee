@@ -13,6 +13,9 @@ Fiber = Npm.require 'fibers'
 #remove temp stuff on start
 TrustStatus.remove({})
 
+makeEvent = (id, message)->
+  Events.insert({fleet: id, time: (new Date).getTime(), message: message})
+
 Meteor.publish "trust", ()->
   TrustStatus.find({})
 
@@ -64,7 +67,7 @@ Meteor.methods
       fcuser: user._id
       active: true
     newId = Fleets.insert(newFleet)
-    Events.insert({fleet: newId, time: (new Date).getTime(), message: "Fleet created!"})
+    makeEvent(newId, "Fleet created!")
     console.log "Fleet name: "+fleetName+" MOTD: "+motd
   leaveFleet: ->
     user = Meteor.user()
@@ -90,11 +93,13 @@ Meteor.methods
       throw new Meteor.Error 404, "I can't find you in the system."
     Characters.update({_id: character._id}, {$set: {fleet: theFleet._id}})
     console.log "Character '"+character.name+"' joined fleet "+theFleet._id+"."
+    makeEvent theFleet._id, character.name+" joined."
   igbLeaveFleet: (hostHash)->
     character = Characters.findOne({hostid: hostHash})
     if !character?
       throw new Meteor.Error 404, "I can't find you in the system."
     Characters.update({_id: character._id}, {$set: {fleet: undefined}})
+    makeEvent theFleet._id, character.name+" left."
 
 Router.map ->
   @route 'bgupdate',

@@ -115,3 +115,14 @@
   width: 100px;
   margin-top: 6px;
 }
+
+#fcEvents{
+  background-color:transparent;
+  right: 3px;
+  text-align: right;
+  color: rgba(29, 29, 29, 0.34);
+  text-shadow: .5px .5px 1px #000000;
+  font-size: 12px;
+  pointer-events: none;
+  position:absolute;
+}

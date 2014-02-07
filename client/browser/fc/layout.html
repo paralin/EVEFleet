@@ -157,7 +157,16 @@
 <template name="fcMiddle">
   {{>fcMapCtrls}}
   <div id="fcMiddle">
+    {{>fcEvents}}
   </div>
+</template>
+
+<template name="fcEvents">
+<div id="fcEvents">
+{{#each events}}
+{{niceTime}}: {{message}}
+{{/each}}
+</div>
 </template>
 
 <template name="fcRightBar">

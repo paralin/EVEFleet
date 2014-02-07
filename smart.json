@@ -5,6 +5,7 @@
     "jquery.transit": {},
     "font-awesome": {},
     "tinycolor": {},
-    "jquery.autocomplete": {}
+    "jquery.autocomplete": {},
+    "moment": {}
   }
 }

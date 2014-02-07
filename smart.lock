@@ -7,7 +7,8 @@
       "jquery.transit": {},
       "font-awesome": {},
       "tinycolor": {},
-      "jquery.autocomplete": {}
+      "jquery.autocomplete": {},
+      "moment": {}
     },
     "packages": {
       "iron-router": {
@@ -39,6 +40,11 @@
         "git": "https://github.com/kidovate/meteor-jquery.autocomplete.git",
         "tag": "v1.2.9",
         "commit": "a0490281cd3fdc7196093350fa38f9180a4460f5"
+      },
+      "moment": {
+        "git": "https://github.com/acreeger/meteor-moment.git",
+        "tag": "v2.5.1",
+        "commit": "8c9bc5d3fc96705057737cb9743d555417f6e551"
       },
       "bootstrap-3": {
         "git": "https://github.com/mangasocial/meteor-bootstrap-3.git",
