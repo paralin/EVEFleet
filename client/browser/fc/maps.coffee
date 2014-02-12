@@ -35,6 +35,7 @@ Meteor.startup ->
   Template.fcMiddle.rendered = ->
     height = $("#fcMiddle").height()
     width = $("#fcMiddle").width()
+    return if $("#fcMiddle svg").length > 0
     svg = d3.select("#fcMiddle").append("svg").attr("width", width).attr("height", height).attr("pointer-events", "all")
     console.log "Rerendering because of Spark render request"
     rerender()

@@ -8,9 +8,14 @@ Meteor.startup =>
       return
     if pfleet?
       delete Session.keys["pendingFleet"]
+      pfleet = pfleet.replace(/\ /g, "").replace(/\W|_/, "")
       if Template.eveGeneralInfo.hasFleet()
+        #check if fleet is is still the same
+        if Template.eveGeneralInfo.fleetId() is pfleet
+          return
         Meteor.call "igbLeaveFleet", Session.get("hostHash"), (err, res)->
           console.log "Attempted to leave fleet automatically"
+      #This works because calls are done in order from client
       Meteor.call "joinFleet", Session.get("hostHash"), pfleet, (err, res)->
         if err?
           $.pnotify

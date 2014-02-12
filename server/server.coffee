@@ -91,15 +91,18 @@ Meteor.methods
     character = Characters.findOne({hostid: hostHash})
     if !character?
       throw new Meteor.Error 404, "I can't find you in the system."
-    Characters.update({_id: character._id}, {$set: {fleet: theFleet._id}})
-    console.log "Character '"+character.name+"' joined fleet "+theFleet._id+"."
-    makeEvent theFleet._id, character.name+" joined."
+    if character.fleet isnt fleetID
+      Characters.update({_id: character._id}, {$set: {fleet: theFleet._id}})
+      console.log "Character '"+character.name+"' joined fleet "+theFleet._id+"."
+      makeEvent theFleet._id, character.name+" ("+character.shiptype+") joined."
   igbLeaveFleet: (hostHash)->
     character = Characters.findOne({hostid: hostHash})
     if !character?
       throw new Meteor.Error 404, "I can't find you in the system."
-    Characters.update({_id: character._id}, {$set: {fleet: undefined}})
-    makeEvent theFleet._id, character.name+" left."
+    fleet = Fleets.findOne(_id: character.fleet)
+    if fleet?
+      makeEvent fleet._id, character.name+" left."
+      Characters.update({_id: character._id}, {$set: {fleet: undefined}})
 
 Router.map ->
   @route 'bgupdate',

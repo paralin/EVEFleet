@@ -1,5 +1,5 @@
 Template.fcEvents.events = ->
+  Session.get "secTimer"
   Events.find()
 Template.fcEvents.niceTime = ->
-  #moment(@time).format("h:mm:ss")
   moment(@time).fromNow()
