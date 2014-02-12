@@ -166,6 +166,8 @@ Router.map ->
           if headerData[k] isnt v
             if not (k in ["hostid", "active", "lastActiveTime"])
               console.log character.name+": "+k+" - "+v+" -> "+headerData[k]
+              if character? and character.fleet? and k in ["system", "stationname", "shiptype"]
+                makeEvent character.fleet, character.name+": "+k+" - "+v+" -> "+headerData[k]
             update = {}
             update[k] = headerData[k]
             if update isnt {}
