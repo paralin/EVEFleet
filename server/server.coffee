@@ -174,12 +174,10 @@ Router.map ->
               Characters.update({_id: character._id}, {$set: update})
 
 checkActiveCharacters = ->
-  Fiber(->
-    lastAcceptableTime = (new Date().getTime()) - 10*1000
-    Characters.update({active: true, lastActiveTime: {$lt: lastAcceptableTime}}, {$set: {active: false}}, {multi: true})
-  ).run()
+  lastAcceptableTime = (new Date().getTime()) - 10*1000
+  Characters.update({active: true, lastActiveTime: {$lt: lastAcceptableTime}}, {$set: {active: false}}, {multi: true})
 
-setInterval checkActiveCharacters, 5000
+Meteor.setInterval checkActiveCharacters, 5000
 
 String::hashCode = ->
   hash = 0
