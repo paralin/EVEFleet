@@ -1,0 +1,27 @@
+{
+  "name": "evefleet",
+  "private": true,
+  "version": "0.0.0",
+  "authors": [
+    "Christian Stewart <kidovate@gmail.com>"
+  ],
+  "description": "A EVE Online fleet tracking system.",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    ".meteor/local/bower",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "pnotify": "~2.0.1",
+    "jquery.transit": "~0.9.12",
+    "fontawesome": "~4.2.0",
+    "d3": "~3.4.13",
+    "tinycolor": "~1.1.0",
+    "jquery.autocomplete": "*",
+    "moment": "~2.8.3",
+    "jquery-cycle2": "~2.1.6"
+  }
+}

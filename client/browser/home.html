@@ -4,7 +4,6 @@
       <h3 class="panel-title">Start Menu</h3>
     </div>
     <div class="panel-body" style="height: 100%">
-      {{#isolate}}
       <div id="startOptions">
         {{#unless menuFlipped}}
         Welcome to EVEFleet! What would you like to do?<br/><br/>
@@ -14,7 +13,7 @@
             <p class="list-group-item-text">Create a new fleet as the Fleet Commander.</p>
           </a>
           <a class="list-group-item flipbtn" id="joinFleetBtn" >
-            <h4 class="list-group-item-heading">Join a Fleet</h5>
+            <h4 class="list-group-item-heading">Join a Fleet</h4>
             <p class="list-group-item-text">Instructions on how to use the InGame Browser to join a fleet.</p>
           </a>
         </div>
@@ -24,13 +23,10 @@
         </div>
         {{/unless}}
       </div>
-      {{#isolate}}
 
       {{#if showFleetForm}}
       {{>fleetSetupForm}}  
       {{/if}}
-      {{/isolate}}
-      {{/isolate}}
     </div>
   </div>
 </template>
@@ -46,7 +42,7 @@
           </div>
           <div class="form-group">
             <label for="motd">MOTD</label>
-            <textarea style="max-width:380px;max-height:120px;min-height:120px;height:120px;" class="form-control" id="motd" placeholder="Fleet Description"/>
+            <textarea style="max-width:380px;max-height:120px;min-height:120px;height:120px;" class="form-control" id="motd" placeholder="Fleet Description"></textarea>
           </div>
           <div style="margin-top: 15px; width: 100%; text-align: center">
             <button class="btn btn-primary" id="finalizeFleetBtn">Create Fleet</button>

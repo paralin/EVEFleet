@@ -91,8 +91,6 @@ Meteor.startup =>
     fleet.motd
 
   Meteor.startup ->
-    Meteor.subscribe "trust"
-    Meteor.subscribe "characters", Session.get("hostHash")
     Deps.autorun ->
       char = Characters.findOne()
       if !char?
@@ -100,7 +98,7 @@ Meteor.startup =>
       if !char.fleet?
         return
       console.log "Fleet: "+char.fleet
-      Meteor.subscribe "igbfleets", Session.get("hostHash")
+      #subscribe to the fleet
 
   pathArray = window.location.href.split '/'
   webAddress = pathArray[0]+"//"+pathArray[2]+"/"

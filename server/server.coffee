@@ -16,39 +16,6 @@ TrustStatus.remove({})
 makeEvent = (id, message)->
   Events.insert({fleet: id, time: (new Date).getTime(), message: message})
 
-Meteor.publish "trust", ()->
-  TrustStatus.find({})
-
-Meteor.publish "characters", (hostHash)->
-  Characters.find({hostid: hostHash})
-
-Meteor.publish "fleets", ->
-  Fleets.find({fcuser: @userId, active: true})
-Meteor.publish "igbfleets", (userHash) ->
-  check userHash, String
-  char = Characters.findOne({hostid: userHash})
-  if !char?
-    return
-  #console.log char.fleet
-  Fleets.find({_id: char.fleet, active: true})
-Meteor.publish "fleetCharacters", ->
-  user = Meteor.users.findOne({_id: @userId})
-  if !user?
-    return
-  fleet = Fleets.findOne({fcuser: @userId, active: true})
-  if !fleet?
-    return
-  Characters.find({fleet: fleet._id}, {fields: {lastActiveTime:0}})
-
-Meteor.publish "fleetEvents", ->
-  user = Meteor.users.findOne({_id: @userId})
-  if !user?
-    return
-  fleet = Fleets.findOne({fcuser: @userId, active: true})
-  if !fleet?
-    return
-  Events.find({fleet: fleet._id})
-
 Meteor.methods
   createFleet: (fleetName, motd) ->
     check fleetName, String

@@ -1,9 +1,11 @@
+Template.browserlayout.helpers
+    "hasFleet": ->
+        Fleets.findOne()?
+    "fleetName": ->
+        Fleets.findOne().name
+
 Template.browserlayout.events
-  'click #logoutbtn': ->
-    Meteor.logout()
-  'click #leavefleetbtn': ->
-    Meteor.call "leaveFleet"
-Template.browserlayout.hasFleet = ->
-  Fleets.findOne()?
-Template.browserlayout.fleetName = ->
-  Fleets.findOne().name
+    'click #logoutbtn': ->
+        Meteor.logout()
+    'click #leavefleetbtn': ->
+        Meteor.call "leaveFleet"

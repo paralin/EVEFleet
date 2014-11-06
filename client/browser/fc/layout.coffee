@@ -124,11 +124,3 @@ Template.fcMembersList.rendered = ->
 Meteor.startup ->
   Session.set "membersSelected", true
   Session.set "shipsSelected", false
-  Deps.autorun ->
-    user = Meteor.user()
-    if !user?
-      return
-    fleet = Fleets.findOne()
-    if !fleet?
-      return
-    Meteor.subscribe "fleetCharacters"

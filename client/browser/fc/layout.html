@@ -1,10 +1,8 @@
 <template name="fleetCommander">
   <div class="fcContainer">
-    {{#isolate}}
     {{>fcLeftBar}}
     {{>fcMiddle}}
     {{>fcRightBar}}
-    {{/isolate}}
   </div>
 </template>
 
@@ -31,7 +29,6 @@
       <button class="panelCloseBtn btn btn-primary pull-right">✖</button>
     </div>
     <div class="panel-body" style="height: 100%">
-      {{#isolate}}
       <div class="pull-left profilePic">
       <img style="width:150px;height:150px;" src="http://image.eveonline.com/Character/{{charId}}_200.jpg"/>
       </div>
@@ -43,7 +40,6 @@
         <b>Corp:</b> {{corpname}}<br>
         <b>Alliance:</b> {{alliancename}}<br>
       </div>
-      {{/isolate}}
     </div>
   </div>
 </div>
@@ -55,13 +51,13 @@
 <template name="fcLeftBarButtons">
   <div class="buttons">
     <ul class="nav nav-pills">
-      <li {{#if membersSelected}}class="active"{{/if}}>
+        <li class="{{#if membersSelected}}active{{/if}}">
         <a href="" id="membersButton">
           Members
           <span class="badge">{{membersCount}}</span>
         </a>
       </li>
-      <li {{#if shipsSelected}}class="active"{{/if}}>
+      <li class="{{#if shipsSelected}}active{{/if}}">
         <a href="" id="shipsButton">
           Ships
           <span class="badge">{{undockedShips}}</span>

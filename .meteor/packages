@@ -3,20 +3,13 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-standard-app-packages
-preserve-inputs
+meteor-platform
+mizzao:bootstrap-3
 coffeescript
-iron-router
+iron:router
 http
 random
-jquery
 accounts-password
 accounts-base
-pnotify
-jquery.transit
-font-awesome
-d3
-tinycolor
+kidovate:bower
 underscore
-jquery.autocomplete
-moment
