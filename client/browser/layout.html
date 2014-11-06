@@ -1,14 +1,8 @@
 <template name="browserlayout">
-<div class="navbar navbar-default navbar-fixed-top">
+<div class="navbar navbar-default navbar-fixed-top navbar-collapse">
     <div class="navbar-header">
         <span class="navbar-brand">EVEFleet</span>
     </div>
-
-    {{#if hasFleet}}
-    <ul class="nav navbar-nav" id="pageTitle">
-        <li><a>{{fleetName}}</a></li>
-    </ul>
-    {{/if}}
 
     <ul class="nav navbar-nav navbar-right" style="right:0;top:0;width:200px;">
         {{#if hasFleet}}
@@ -18,4 +12,11 @@
     </ul>
 </div>
 {{>yield}}
+  Deps.autorun ->
+    user = Meteor.user()
+    if !user?
+      return
+    fleet = Fleets.findOne()
+    if !fleet?
+      return
 </template>
