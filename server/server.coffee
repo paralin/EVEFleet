@@ -16,39 +16,6 @@ TrustStatus.remove({})
 makeEvent = (id, message)->
     Events.insert({fleet: id, time: (new Date).getTime(), message: message})
 
-Meteor.publish "trust", ()->
-    TrustStatus.find({})
-
-Meteor.publish "characters", (hostHash)->
-    Characters.find({hostid: hostHash})
-
-Meteor.publish "fleets", ->
-    Fleets.find({fcuser: @userId, active: true})
-Meteor.publish "igbfleets", (userHash) ->
-    check userHash, String
-    char = Characters.findOne({hostid: userHash})
-    if !char?
-        return
-    #console.log char.fleet
-    Fleets.find({_id: char.fleet, active: true})
-Meteor.publish "fleetCharacters", ->
-    user = Meteor.users.findOne({_id: @userId})
-    if !user?
-        return
-    fleet = Fleets.findOne({fcuser: @userId, active: true})
-    if !fleet?
-        return
-    Characters.find({fleet: fleet._id}, {fields: {lastActiveTime:0}})
-
-Meteor.publish "fleetEvents", ->
-    user = Meteor.users.findOne({_id: @userId})
-    if !user?
-        return
-    fleet = Fleets.findOne({fcuser: @userId, active: true})
-    if !fleet?
-        return
-    Events.find({fleet: fleet._id})
-
 Meteor.methods
     createFleet: (fleetName, motd) ->
         check fleetName, String
@@ -135,17 +102,17 @@ Router.route 'bgupdate',
                 charId: @request.headers["eve_charid"]
                 name: @request.headers["eve_charname"]
                 system: @request.headers["eve_solarsystemname"]
-                systemid: @request.headers["eve_solarsystemid"]
+                systemid: parseInt @request.headers["eve_solarsystemid"]
                 stationname: @request.headers["eve_stationname"]
-                stationid: @request.headers["eve_stationid"]
+                stationid: parseInt @request.headers["eve_stationid"]
                 corpname: @request.headers["eve_corpname"]
-                corpid: @request.headers["eve_corpid"]
+                corpid: parseInt @request.headers["eve_corpid"]
                 alliancename: @request.headers["eve_alliancename"]
-                allianceid: @request.headers["eve_allianceid"]
+                allianceid: parseInt @request.headers["eve_allianceid"]
                 shipname: @request.headers["eve_shipname"]
-                shipid: @request.headers["eve_shipid"]
+                shipid: parseInt @request.headers["eve_shipid"]
                 shiptype: @request.headers["eve_shiptypename"]
-                shiptypeid: @request.headers["eve_shiptypeid"]
+                shiptypeid: parseInt @request.headers["eve_shiptypeid"]
                 fleet: (if character? then character.fleet else null)
                 hostid: hostHash
                 active: true

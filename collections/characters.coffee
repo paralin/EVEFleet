@@ -33,6 +33,7 @@ CharacterSchema = new SimpleSchema
     fleet:
         type: String
         index: true
+        optional: true
     hostid:
         type: String
         index: true

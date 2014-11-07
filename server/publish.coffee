@@ -4,3 +4,11 @@ Meteor.publish "fleet", ->
         active: true
         fcuser: @userId
 
+Meteor.publish "trust", (hostHash)->
+    check hostHash, String
+    TrustStatus.find({ident: hostHash})
+
+Meteor.publish "characters", (hostHash)->
+    console.log "characters #{hostHash}"
+    check hostHash, String
+    Characters.find({hostid: hostHash})
