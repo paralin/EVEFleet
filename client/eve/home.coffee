@@ -1,7 +1,7 @@
 Meteor.startup =>
-  if not @eveClient
+  if not Session.get "eveClient"
     return
-  Deps.autorun ->
+  Tracker.autorun ->
     pfleet = Session.get("pendingFleet")
     trust = Session.get("hasTrust")
     if !trust? or !trust
@@ -91,7 +91,7 @@ Meteor.startup =>
     fleet.motd
 
   Meteor.startup ->
-    Deps.autorun ->
+    Tracker.autorun ->
       char = Characters.findOne()
       if !char?
         return

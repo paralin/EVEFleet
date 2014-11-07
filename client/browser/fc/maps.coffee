@@ -9,7 +9,7 @@ height = null
 Meteor.startup ->
   Session.set("mapRegion", "Cloud Ring") if !Session.get("mapRegion")?
 
-  Deps.autorun ->
+  Tracker.autorun ->
     route = Router.current()
     if !route? || route.template isnt "fleetCommander"
       rendered = false

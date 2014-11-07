@@ -3,3 +3,4 @@ Meteor.publish "fleet", ->
     Fleets.find
         active: true
         fcuser: @userId
+

@@ -2,7 +2,7 @@ joinInstructions = false
 animatedIn = false
 Session.set("startMenuFlipped", false)
 Session.set "showFleetForm", false
-Deps.autorun ->
+Tracker.autorun ->
     route = Router.current()
     if !route?
         return

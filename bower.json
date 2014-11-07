@@ -20,8 +20,8 @@
     "fontawesome": "~4.2.0",
     "d3": "~3.4.13",
     "tinycolor": "~1.1.0",
-    "jquery.autocomplete": "*",
     "moment": "~2.8.3",
-    "jquery-cycle2": "~2.1.6"
+    "jquery-cycle2": "~2.1.6",
+    "typeahead.js": "~0.10.5"
   }
 }

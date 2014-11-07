@@ -2,7 +2,7 @@ pathArray = window.location.href.split '/'
 webAddress = pathArray[0]+"//"+pathArray[2]+"/"
 hasRendered = false
 Session.set "selectedMembersList", "commanders"
-Deps.autorun ->
+Tracker.autorun ->
     route = Router.current()
     if !route?
         return
@@ -105,16 +105,22 @@ Template.fcMembersList.isSelected = (tab)->
     Session.get("selectedMembersList") is tab
 
 Template.fcMapCtrls.rendered = ->
-    #console.log regionList
-    $("#regionInput").autocomplete
-        lookup: regionList
+    $("#regionInput").typeahead(
+        hint: true
+        highlight: true
+        minLength: 1
+    ,
+        name: 'regions'
+        displayKey: 'value'
+        source: window.ttregions
+    )
 
 Template.fcMapCtrls.events
     'keyup #regionInput': ->
         region = $("#regionInput").val()
         console.log region
-        console.log regionList
-        if !(region in regionList)
+        console.log regions
+        if !(region in regions)
             return
         Session.set "mapRegion", region
     

@@ -12,11 +12,4 @@
     </ul>
 </div>
 {{>yield}}
-  Deps.autorun ->
-    user = Meteor.user()
-    if !user?
-      return
-    fleet = Fleets.findOne()
-    if !fleet?
-      return
 </template>
