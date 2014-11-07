@@ -5,5 +5,5 @@
 Session.set "eveClient", eveClient
 
 Template.body.helpers
-    "renderRouter": ->
-        not Session.get "eveClient"
+  "renderRouter": ->
+    not Session.get "eveClient"
