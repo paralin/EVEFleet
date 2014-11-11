@@ -8,23 +8,26 @@
 </template>
 <template name="eveGeneralInfo">
    The server is keeping track of the following information in realtime:<br>
-   Your ship name: {{shipName}}<br>
-   Your ship type: {{shipType}}<br>
-   Your character name: {{charName}}<br>
-   Your corp name: {{corpName}}<br>
-   Your system name: {{systemName}}<br>
-   Your station name: {{stationName}}<br>
-   
-   {{#if hasFleet}}
-   Your fleet name: {{fleetName}}<br>
-   Your fleet MOTD: {{fleetMOTD}}<br>
+   {{#if character}}
+       Your ship name: {{character.shipname}}<br>
+       Your ship type: {{character.shiptype}}<br>
+       Your character name: {{character.name}}<br>
+       Your corp name: {{character.corpname}}<br>
+       Your system name: {{character.system}}<br>
+       Your station name: {{character.stationname}}<br>
    {{/if}}
+
    
    <br>
 
-  {{#if hasFleet}}
-    Your fleet ID: {{fleetId}}<br>
+  {{#if fleet}}
+    Your fleet ID: {{fleet._id}}<br>
+    Your fleet name: {{fleet.name}}<br>
+    Your fleet MOTD: {{fleet.motd}}<br>
     <button style="padding: 9px" class="btn btn-danger" id="leaveFleetBtn">Leave Fleet</button>
+  {{else}}
+    {{#if pendingFleet}}
+    <b>Pending fleet: {{pendingFleet}}</b>
     {{else}}
     <form class="form-horizontal" action="javascript:void(0);">
       <fieldset>
@@ -34,6 +37,7 @@
         </div>
         </fieldset>
       </form>
+    {{/if}}
   {{/if}}
 </template>
 <template name="requestTrust">

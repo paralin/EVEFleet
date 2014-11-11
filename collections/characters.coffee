@@ -12,24 +12,37 @@ CharacterSchema = new SimpleSchema
         type: Number
     stationname:
         type: String
+        optional: true
     stationid:
         type: Number
+        optional: true
     corpname:
         type: String
+        optional: true
     corpid:
         type: Number
+        optional: true
+    corproles:
+        type: Number
+        optional: true
     alliancename:
         type: String
+        optional: true
     allianceid:
         type: Number
+        optional: true
     shipname:
         type: String
+        optional: true
     shipid:
         type: Number
+        optional: true
     shiptype:
+        optional: true
         type: String
     shiptypeid:
         type: Number
+        optional: true
     fleet:
         type: String
         index: true

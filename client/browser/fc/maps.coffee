@@ -11,7 +11,7 @@ Meteor.startup ->
 
   Tracker.autorun ->
     route = Router.current()
-    if !route? || route.template isnt "fleetCommander"
+    if !route? || route.url isnt "/commander"
       rendered = false
       renderedMap = null
       return
@@ -20,7 +20,7 @@ Meteor.startup ->
 
   resizeHandler = ->
     route = Router.current()
-    if !route? || route.template isnt "fleetCommander"
+    if !route? || route.url isnt "/commander"
       return
     console.log "Resize handler"
     height = $("#fcMiddle").height()

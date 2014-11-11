@@ -106,8 +106,8 @@ Template.fcMembersList.isSelected = (tab)->
 
 Template.fcMapCtrls.rendered = ->
   $("#regionInput").typeahead(
-    hint: true
-    highlight: true
+    hint: false
+    highlight: false
     minLength: 1
   ,
     name: 'regions'
@@ -118,12 +118,10 @@ Template.fcMapCtrls.rendered = ->
 Template.fcMapCtrls.events
   'keyup #regionInput': ->
     region = $("#regionInput").val()
-    console.log region
-    console.log regions
-    if !(region in regions)
+    if !_.contains(regions, region)
       return
+    console.log "Region is in regions"
     Session.set "mapRegion", region
-  
 
 Template.fcMembersList.rendered = ->
   $("#membersList a[rel=tooltip]").tooltip

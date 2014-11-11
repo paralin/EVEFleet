@@ -68,8 +68,9 @@ Meteor.methods
       throw new Meteor.Error 404, "I can't find you in the system."
     fleet = Fleets.findOne(_id: character.fleet)
     if fleet?
+      console.log fleet
+      Characters.update({_id: character._id}, {$set: {fleet: null}})
       makeEvent fleet._id, character.name+" left."
-      Characters.update({_id: character._id}, {$set: {fleet: undefined}})
 
 Router.route 'bgupdate',
   where: 'server',
@@ -80,7 +81,7 @@ Router.route 'bgupdate',
       @response.end "This is a background update method not supported in normal browsers."
       return
     host = @request.connection.remoteAddress
-    trusted = @request.headers["eve_trusted"] is "Yes"
+    trusted = @request.headers["eve_trusted"] is "Yes" and @request.headers["eve_serverip"]?
     hostHash = @request.headers["ident"]
     trustStatus = TrustStatus.findOne({ident: hostHash})
     if !trustStatus?
@@ -93,7 +94,7 @@ Router.route 'bgupdate',
     @response.writeHead 200, {'Content-Type': 'text/html'}
     @response.end ""+hostHash
 
-    if !trusted
+    if !trusted || !hostHash?
       return
 
     #parse the new data
@@ -113,10 +114,14 @@ Router.route 'bgupdate',
         shipid: parseInt @request.headers["eve_shipid"]
         shiptype: @request.headers["eve_shiptypename"]
         shiptypeid: parseInt @request.headers["eve_shiptypeid"]
+        corproles: parseInt @request.headers["eve_corprole"]
         fleet: (if character? then character.fleet else null)
         hostid: hostHash
         active: true
         lastActiveTime: (new Date).getTime()
+
+    for k, v of headerData
+        headerData[k] = null if v != v || !v?
 
     #find the character object
     if !character?

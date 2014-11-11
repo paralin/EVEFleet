@@ -1,6 +1,4 @@
 Tracker.autorun ->
-  if Session.get "eveClient"
-    Meteor.subscribe "fleet"
-  else
+  if !(Session.get "eveClient")
     if Meteor.user()?
-      Meteor.subscribe "fleet"
+      Meteor.subscribe "browserdata"

@@ -14,4 +14,6 @@ accounts-base
 kidovate:bower
 underscore
 aldeed:collection2
+less
+reywood:publish-composite
 

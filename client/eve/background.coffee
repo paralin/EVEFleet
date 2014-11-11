@@ -5,24 +5,19 @@ Meteor.startup ->
   pathArray = window.location.href.split '/'
   webAddress = pathArray[0]+"//"+pathArray[2]+"/"
   
-  Session.set("hostHash", Random.id())
+  if !Session.get("hostHash")?
+    Session.set("hostHash", Random.id())
 
   Tracker.autorun ->
     hash = Session.get("hostHash")
-    Meteor.subscribe "trust", hash
-
-  Tracker.autorun ->
-    character = Characters.findOne()
-    if character?
-      Meteor.subscribe "igbfleets", Session.get("hostHash")
+    Meteor.subscribe "igbdata", hash
 
   Tracker.autorun ->
     trustStatus = TrustStatus.findOne()
     hasTrust = trustStatus? && trustStatus.status
     if Session.get("hasTrust") isnt hasTrust
       Session.set("hasTrust", hasTrust)  #    Session.set("hostHash", hostHash)
-    if hasTrust
-      Meteor.subscribe "characters", Session.get("hostHash")
+
   updateRequest = ()->
     HTTP.get webAddress+"background/update", {headers: {ident: Session.get("hostHash")}}, (err, res)->
       if err?
@@ -30,4 +25,3 @@ Meteor.startup ->
         return
   setInterval(updateRequest, 3000)
   updateRequest()
-
